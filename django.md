@@ -12,7 +12,7 @@
 Необходимо выполнить проверку
 ```python
 from django.conf import settings
-from django.conf.urls import static
+from django.conf.urls.static import static
 
 if settings.DEBUG:
     #ссылки которые вернутся при выполнении static
@@ -29,9 +29,46 @@ MEDIA_URL = 'media/' #путь по которому можно получить
 MEDIA_ROOT = BASE_DIR / 'uploads' #путь по которому будут, находится статичные файлы
     
 ```
-### FileField
+## FileField
 FileField - объект, который позволяет загрузить и сохранить файлы на диске.
 Тип поля в models обозначается следующим образом
 ```python
     receipt = models.FileField(blank=True, null=True, upload_to="orders/receipts") #указывается маршрут куда сохранять файлы 
 ```
+Файлы можно глобально разделить на два типа:
+1. Это статика, которая идет в комплекте с приложением. В режиме тестирования необходимо также переназначить хранилище статики
+```python
+STATIC_URL = 'static/' #путь по которому можно получить медиа через адресную строку
+STATIC_ROOT = BASE_DIR / 'uploads' #путь по которому будут, находится статичные файлы
+    
+```
+2. Вторая группа статичных файлов - это media files, обычно они служат для отображения динамического контента
+на странице. Обычно эти файлы постоянно меняются.
+
+
+## ImageField
+Для работы с изображениями в python есть специальный класс ImageField.  Но для начало работы с изображениями в django 
+необходимо установить библиотеку pillow - отвечающую за работу с изображениями
+
+Пример создания поля ImageField в models
+
+```python
+    preview = models.ImageField(blank=True, null=True, upload_to=product_preview_directory_path)
+```
+Где product_preview_directory_path - это кастомная функция отвечающая создание путей для файлов
+```python
+def product_preview_directory_path(instance: "Product", filename: str):
+    return f"products/product_{instance.pk}/preview/{filename}"
+```
+Отображение в HTML разметке
+```HTML
+  {% product.preview %}
+      <img src="{{ product.preview.url }}" alt="{{ product.preview.name }}">
+  {% endif %}
+```
+Для загрузки файлов через форму необходимо выставить следующие настойки:
+```HTML
+ <form method="post" enctype="multipart/form-data">
+```
+
+### Загрузка нескольких изображений
