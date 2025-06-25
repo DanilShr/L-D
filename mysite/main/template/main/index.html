@@ -20,10 +20,21 @@
             height: 100px;
             padding: 0px 40px;
         }
+
         section {
             background-color: #222020;
 
         }
+
+        footer {
+            color: white;
+        }
+        footer > div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         header > div {
             display: flex;
             justify-content: space-between;
@@ -103,6 +114,31 @@
             align-items: center;
             padding: 50px 150px;
         }
+        .main_img img {
+            border-radius: 10px;
+        }
+        footer {
+            background-color: #222020;
+            height: 100px;
+            padding: 0px 40px;
+        }
+        .social {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .social-network {
+            display: flex;
+            justify-content: space-between;
+            width: 160px;
+        }
+
+        .social-network img {
+            width: 40px;
+            height: 40px;
+        }
 
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -127,15 +163,15 @@
                 <a href="#">О нас</a>
             </div>
             <div class="registration">
-                <button type="button" class="btn btn-outline-light">Регистрация</button>
-                <button type="button" class="btn btn-primary">Войти</button>
+                <button type="button" class="btn btn-outline-light" style="font-size: small; margin-right: 10px">Регистрация</button>
+                <button type="button" class="btn btn-primary" style="font-size: small">Войти</button>
             </div>
         </div>
     </header>
     <section class="first-block">
         <div class="fix-container">
             <div class="info">
-                <h1>Студия 3D Печати</h1>
+                <h1>Студия 3D Печати </h1>
                 <p>Наша студия оказывает услуги 3D печати. У нас вы можете заказать:<p>
                 <ul class="list">
                     <li>3D моделирование</li>
@@ -144,8 +180,8 @@
                 </ul>
                 <button type="button" class="btn btn-primary btn-lg">Заказать</button>
             </div>
-            <div>
-                <img src="src/main.jpeg">
+            <div class="main_img">
+                <img src="src/main.jpg">
             </div>
         </div>
     </section>
@@ -175,6 +211,24 @@
             </div>
         </div>
     </section>
+    <footer>
+        <div class="fix-container">
+            <div class="phone">
+                <h6>Телефон</h6>
+                <p style="font-size: small"> +7 (014) 039-72-77</p>
+            </div>
+            <div>
+                <div class="social">
+                    <h6>Мы в социальных сетях</h6>
+                    <div class="social-network">
+                        <a href="#"><img src="src/Социальные%20сети/vk.png"></a>
+                        <a href="#"><img src="src/Социальные%20сети/tg.png"></a>
+                        <a href="#" target="_blank"><img src="https://toplogos.ru/images/thumbs/preview-logo-avito.png"  alt="Логотип Avito" style="border-radius: 20px; width: 35px; height: 35px"/></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
 
