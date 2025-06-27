@@ -23,6 +23,7 @@ if settings.DEBUG:
     )
     
 ```
+
 2. Указать переменные (MEDIA_URL, MEDIA_ROOT) в настройках приложения settings
 ```python
 MEDIA_URL = 'media/' #путь по которому можно получить медиа через адресную строку
