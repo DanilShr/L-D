@@ -112,6 +112,15 @@ class ProductViewSet(viewsets.ModelViewSet):
     search_fields = ['name', 'description']
     filterset_fields = ('name', 'price', 'description', 'discount')
 ```
+Так как ViewSet представляет из себя набор ссылок подключать его в urls необходимо при помощи библиотеки 
+```python
+routers = DefaultRouter()
+routers.register("products", ProductViewSet)
+```
+И после указать необходимый адрес 
+```python
+ path("api/", include(routers.urls)),
+```
 
 ## Filter
 Для того чтобы настроить фильтрацию в django api необходимо установить соответсвующую библиотеку
