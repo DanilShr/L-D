@@ -1,8 +1,9 @@
 from django.urls import path
 from django.conf.urls.static import static
-from mysite import settings
-from .views import MainView
+from .views import MainView, LoginView
 
 urlpatterns = [
-    path("", MainView.as_view(), name="main")
+    path("", LoginView.as_view(), name="main"),
 ]
+
+

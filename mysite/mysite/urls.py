@@ -24,10 +24,6 @@ urlpatterns = [
     path("ldprint/", include("main.urls"), name="main")
 ]
 
-if settings.DEBUG:
-    urlpatterns.extend(
-        static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    )
-    urlpatterns.extend(
-        static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    )
+if settings.DEBUG:  # Только в режиме разработки!
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
