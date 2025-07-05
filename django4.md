@@ -1,105 +1,111 @@
-# Эффективное взаимодействие с БД
-## Оптимизация работы с БД
-Оптимизация работы с БД подрузомевает соблюдение нескольких принципов:
-1. Индексы - индексы в бд нужны для ускорения сортировки и фильтрации строк. Они представляют собой струткуры данных 
-которые хранятся отдельно от строк основной таблицы и содержат в себе информацию о том какие записи где находятся и какую 
-информацию содержат. Установка индекса на определенное поле сильно ускорит скорость обработки запросов.
+# Документация в django
+## Документация в административной панели django
+Для работы с документацией в административной панели django необходимо установить дополнительный пакет
 ```python
-name = models.CharField(max_length=100, db_index=True)
+pip install docutils
 ```
-2. Нормализация БД
-
-## Логирование SQL запросов
-Для настройки логирования запросов необходимо проинициализировать в настройках правила для логирования
+После установки необходимо подключить в настройках новое приложение
 ```python
-LOGGING = {
-    'version': 1,
-    'filters': {
-        'require_debug_true': {
-           '()': 'django.utils.log.RequireDebugTrue', #специальный фильтр позволяющий выводить логи только если в настройках приложения указан DEBUG
-        },
-    },
-    'handlers': {
-        'console': { #обработчик который использует уровень DEBUG, также он отсеевает логи в случае если приложение не в debug режиме
-            'level': 'DEBUG',
-            'filters': ['require_debug_true'],
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django.db.backends': { #взаимодействие с бд должно использовать обработчик console
-            'level': 'DEBUG',
-            'handler': ['console'],
-        },
-    },
+'django.contrib.admindocs'
+```
+И подключить middleware
+```python
+'django.contrib.admindocs.middleware.XViewMiddleware'
+```
+Чтобы получить доступ к страницам документации требуется в настройках urls добавить ссылку на документацию
+```python
+path('admin/doc', include('django.contrib.admindocs.urls'))
+```
+## Документация в REST API
+В api можно получить информацию об объекте нажав кнопку OPTIONS. Но при полученной информации будет пустое поле 
+descriptions. Данное поле можно заполнить при помощи docstring в описании view модели 
+```python
+    '''
+    Набор представлений для действий над Product
+    Полный CRUD для сущностей товара
+    model:
+    '''
+```
+Для подробной документации можно использовать специальным расширением для flake8
+```python
+pip install flake8
+pip install flake8-docstrings
+```
+Линтер flake8 - это специальный инструмент для проверки кода на соответствие стиля pep8
+
+## Open Api
+Open api (swagger) - это свод правил который используется для описания restfull api. Open api используют для указания 
+спецификации запросов и ответов которые должен возвращать сервер, а также его используют для описания путей,
+форматов и прочей мета информации
+
+Можно выделить два основных пакета для django rest framework которые позволяют генерировать open api:
+1. DRF spectacular
+```python
+pip install drf-spectacular
+```
+После установки необходимо подключить приложение в настройках, а также нужно добавить настройки rest framework
+```python
+    'drf-spectacular',
+
+#######################
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema', #Этот объект будет использован как базовый 
+                                                                  #класс для всех схем в rest api
 }
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": 'My Site Project API',
+    "DESCRIPTION": 'My site with shop add adn custom auth',
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False, #настройка для того чтобы не показывать информацию по странице документации
 }
 ```
-
-## Транзакции
-Для того чтобы исопльзовать транзакции в django необходимо использовать декоратор transaction из модуля django.db для 
-создания атомарных запросов (т.е. запросы которые выполняются как одно целое, и если где-то произойдет ошибка, транзакция
-откатит запрос)
+Также необходимо в urls указать пути для получения документации
 ```python
-from django.db import transaction
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
-
-class Command(BaseCommand):
-    @transaction.atomic
-    def handle(self, *args, **options):
-        self.stdout.write("Create order with product")
-        user = User.objects.get(username="admin")
-        products: Sequence[Product] = Product.objects.all()
-        order, created = Order.objects.get_or_create(
-            delivery_address="ul Ivanova, d 8",
-            promocode="NEW123",
-            user=user,
-        )
-        for product in products:
-            order.products.add(product)
-        order.save()
-        self.stdout.write(f"Created order {order}")
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('shop/', include('shopapp.urls')),
+    path('myauth/', include('myauth.urls')),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    path('api/schema/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger'),
+    path('api/', include('myapiapp.urls')),
+]
 ```
 
-## Оптимизация запросов
-### Подгрузка данных по выбранному параметру
-Для того чтобы получить данные по определенным полям в виде кортежа необходимо воспользоваться values_list
+Для указания дополнительной информации в swagger view класса можно использовать декоратор extend_schema, а также для
+добавления информации по каждому из методов CRUD, необходимо переопределить родительский метод и добавить декоратор extend_schema
 ```python
-users_info = User.objects.values_list("pk", "username")
-```
-Если запрашивается один элемент можно указать флаг flat=True для того чтобы сформировать результаты запроса в один список
+from drf_spectacular.utils import extend_schema, OpenApiResponse
 
-**defer** - функция позволяющая делать ленивую загрузку только в момент когда данный объект используется, она возращает объект
-и позволят установить поля которые не требуются при выборке
-```python
-products: Sequence[Product] = Product.objects.defer("description", "price", "created_at")
-```
-```sqlite-sql
-SELECT "shopapp_product"."id", "shopapp_product"."name", "shopapp_product"."discount", "shopapp_product"."archived", "shopapp_product"."preview" FROM "shopapp_product" ORDER BY "shopapp_product"."name" ASC, "shopapp_product"."price" ASC; args=(); alias=default
-```
+@extend_schema(description='Product views CRUD')
+class ProductViewSet(ModelViewSet):
+##############################################
+   @extend_schema(
+        summary='Get one product by ID',
+        description='Retrieve **product**, returns 404 if not found',
+        responses={
+            200: ProductSerializer,
+            404: OpenApiResponse(description="Product not found" ),
+        }
+    )
+    def retrieve(self, *args, **kwargs):
+        return super().retrieve(*args, **kwargs)
+    @extend_schema(
+        summary='Update product',
+        description='Update **product**, returns 401 or error product',
+        responses={
+            200: ProductSerializer,
+            401: OpenApiResponse(description="Error update"),
+        }
+    )
+    def update(self, *args, **kwargs):
+        return super().update(*args, **kwargs)
 
-**only** - функция обратная **defer** позволяет выбрать только определенное поле
 
-## Массовые вставки и обновления
-В django массовые вставки и обновления можно делать при помощи bulk_create, bulk_update
-
-```python
-        info = [
-            ('Smartphone 1', 2999),
-            ('Iphone 2', 3922),
-            ('Realme', 2000),
-        ]
-
-        product = [
-            Product(name=name, price=price)
-            for name, price in info
-        ]
-
-        result = Product.objects.bulk_create(product)
-```
-Функция update
-```python
-        result = Product.objects.filter(
-            name__contains="Smartphone",
-        ).update(discount=10)
 ```
