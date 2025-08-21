@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
@@ -8,13 +8,14 @@ from django.views import View
 
 class MainView(View):
     def get(self, request):
+        if request.user.is_authenticated:
+            user = request.user
+
         return render(request, 'main/index.html')
 
 
 class LoginView(View):
     def get(self, request):
-        if request.user.is_authenticated:
-            return render(request, "main/index.html")
         return render(request, 'main/form.html')
 
     def post(self, request):
@@ -24,5 +25,5 @@ class LoginView(View):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            return render(request, "main/index.html")
-        return render(request, 'main/form.html', {"error": "Invalid credential"})
+            return HttpResponseRedirect(reverse('main'))
+        return render(request, 'main/form.html')

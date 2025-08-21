@@ -21,7 +21,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("ldprint/", include("main.urls"), name="main")
+    path("", include("main.urls"), name="main")
 ]
 
 if settings.DEBUG:  # Только в режиме разработки!
