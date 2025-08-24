@@ -1,12 +1,14 @@
 {% extends 'main/index.html' %}
 {% load static %}
-
+<!DOCTYPE html>
+<html lang="en">
 {% block title %}
-    Регистрация
+    Вход
 {% endblock %}
-
+<body style="background-color: #3b3939">
+}
 {% block first_section %}
-    <section class="first-block">
+<section class="first-block">
     <div class="fix-container">
         <form class="reg-form" method="post">
             {% csrf_token %}
@@ -15,29 +17,23 @@
                 {{ error }}
             </p>
             {% endif %}
-            <h1>Регистрация</h1>
+            <h1>Вход</h1>
             <div class="mb-3">
                 <label for="username">Логин:</label>
                 <input type="text" id="username" name="username" class="reg-form__input form-control" required>
             </div>
-            <div class="mb-3">
-                <label for="email">Email:</label>
-                <input type="text" id="email" name="email" class="reg-form__input form-control" required>
-            </div>
             <div>
                 <label for="password">Пароль:</label>
                 <input type="password" id="password" name="password" class="reg-form__input form-control" required>
-            </div>
-            <div>
-                <label for="password">Повторите пароль:</label>
-                <input type="password" id="password2" name="password2" class="reg-form__input form-control" required>
             </div>
             <div class="button-req">
                 <input type="reset" class="btn btn-danger" value="Сбросить">
                 <input type="submit" class="btn btn-primary" value="Войти">
             </div>
         </form>
-        <div class="reg_logo"><img src="{% static 'registration.png' %}"></div>
+        <div class="login_logo"><img src="{% static 'login.png' %}"></div>
     </div>
 </section>
 {% endblock %}
+</body>
+</html>

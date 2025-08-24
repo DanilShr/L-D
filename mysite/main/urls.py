@@ -1,10 +1,16 @@
+from django.contrib.auth.views import LogoutView
 from django.urls import path
 from django.conf.urls.static import static
-from .views import MainView, LoginView
+from .views import MainView, LoginView, RegisterView, MyLogoutView, ServicesView
 
 urlpatterns = [
     path("", MainView.as_view(), name="main"),
     path("login", LoginView.as_view(), name="login" ),
+    path("register", RegisterView.as_view(), name="register" ),
+
+    path("logout", MyLogoutView.as_view(), name="logout" ),
+
+    path("servises", ServicesView.as_view(), name="services"),
 ]
 
 
