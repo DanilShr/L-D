@@ -42,7 +42,7 @@
 - Docker
 - Docker Compose
 - Nginx
-- Gunicorn
+- Uvicorn
 
 ## 📦 Установка и запуск
 
