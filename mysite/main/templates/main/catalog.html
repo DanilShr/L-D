@@ -1,0 +1,20 @@
+{% extends 'main/index.html' %}
+
+{% block first_section %}
+
+    <section class="servises-block">
+    {% for products in product_list %}
+    <div class="fix-container3">
+        {% for product in products %}
+        <div class="product">
+            <img src="{{ product.image }}">
+            <h5>{{ product.name }}</h5>
+            <div>{{ product.description }}</div>
+            <div style="color: lightcyan">{{ product.price }} руб</div>
+            <button type="button" class="btn btn-primary btn-lg">В корзину</button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    </section>
+{% endblock %}

@@ -6,8 +6,9 @@ from django.shortcuts import render, redirect
 from django.template.defaultfilters import first
 from django.urls import reverse, reverse_lazy
 from django.views import View
+from django.views.generic import DetailView
 
-from main.models import Services
+from main.models import Services, Product
 
 
 class MainView(View):
@@ -60,3 +61,20 @@ class ServicesView(View):
         }
         return render(request, 'main/servises.html', context=context)
 
+
+class ProductView(View):
+    def get(self, request):
+        products = Product.objects.all()
+        product_list = []
+        for product in range(0, len(products), 3):
+            product_list.append(products[product:product+3])
+        context = {
+            'product_list': product_list,
+        }
+        return render(request, 'main/catalog.html', context=context)
+
+
+class ProductDetailView(DetailView):
+    queryset = Product.objects.all()
+    context_object_name = 'product'
+    template_name = 'main/product.html'

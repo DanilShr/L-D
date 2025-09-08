@@ -1,0 +1,16 @@
+{% extends 'main/index.html' %}
+
+{% block first_section %}
+    <section class="first-block">
+    <div class="fix-container-item">
+        <div>
+            <h1>{{ product.name }}</h1>
+            <div>{{ product.description }}</div>
+            <div>{{ product.price }}</div>
+        </div>
+        <div class="img_product">
+            <img src="{{ product.image }}">
+        </div>
+    </div>
+    </section>
+{% endblock %}

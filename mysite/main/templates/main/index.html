@@ -33,7 +33,7 @@
                 </div>
                 <div class="menu">
                     <a href="{% url 'services' %}">Услуги</a>
-                    <a href="#">Товары</a>
+                    <a href="{% url 'products' %}">Товары</a>
                     <a href="#">О нас</a>
                 </div>
                 {% if user.is_anonymous %}
