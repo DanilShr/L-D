@@ -2,6 +2,49 @@
 {% load static %}
 {% block first_section %}
 <body style="background: #232323">
+    <div id="myModal" class="qwe">
+        <div class="qwe-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Заказ услуги</h2>
+            <form type="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label">ФИО</label>
+                  <input type="email" class="form-control bg-body-tertiary" id="exampleFormControlInput1">
+                </div>
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label">Email</label>
+                  <input type="email"  class="form-control bg-body-tertiary text-white" id="exampleFormControlInput1" placeholder="name@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Телефон</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div>
+                <label>Покраска</label>
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Открыть меню для выбора</option>
+                  <option value="1">Монотонная покраска</option>
+                  <option value="2">Полная покраска</option>
+                  <option value="3">Без покраски</option>
+                </select>
+                </div>
+                <label for="exampleColorInput" class="form-label">Выберите цвет пластика</label>
+                    <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="color">
+                <div class="mb-3">
+                  <label for="exampleFormControlTextarea1" class="form-label">Примечание</label>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="formFile" class="form-label">Загрузите модель формата (STL/OBJ/3MF/PLY/VRML)</label>
+                  <input class="form-control" type="file" id="formFile">
+                </div>
+                <input type="submit" value="Отправить" class="btn btn-primary btn-lg">
+
+            </form>
+        </div>
+    </div>
     <section class="servises-block">
     {% if services is None %}
         <h2>Услуг пока нет(</h2>
@@ -11,7 +54,7 @@
                 <div class="service">
                     <h2>{{ service.name }}</h2>
                      <p>{{ service.description }}</p>
-                    <button type="button" class="btn btn-primary btn-lg">Заказать</button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="openModal()">Заказать</button>
                 </div>
                 <div>
                     <img src="{{ service.image}}">
