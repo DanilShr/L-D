@@ -53,7 +53,7 @@
                         <img class="main-item" src="{% static 'profile.png' %}" href="javascript:void(0);" tabindex="1">
                            <ul class="sub-menu">
                                <li><a href="#1">Профиль</a></li>
-                               <li><a href="#2">Заказы</a></li>
+                               <li><a href="{% url 'orders'%}">Заказы</a></li>
                                <li><form method="post" action="{% url 'logout' %}" class="d-inline">
                                    {% csrf_token %}
                                    <button type="submit">Выйти</button>
@@ -62,8 +62,8 @@
                     {% else %}
                         <img class="main-item" src="{{ user.avatar}}" href="javascript:void(0);" tabindex="1">
                             <ul class="sub-menu">
-                               <li><a href="#1">Профиль</a></li>
-                               <li><a href="#2">Заказы</a></li>
+                               <li><a href="#3">Профиль</a></li>
+                               <li><a href="{% url 'orders'%}">Заказы</a></li>
                                <li><form method="post" action="{% url 'logout' %}" class="d-inline">
                                    {% csrf_token %}
                                    <button type="submit">Выйти</button>

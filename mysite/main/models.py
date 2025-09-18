@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
@@ -18,5 +19,21 @@ class Product(models.Model):
 
 def __str__(self):
         return self.name
+
+
+class Orders(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    service = models.CharField(max_length=100, blank=True)
+    status = models.CharField(max_length=100, blank=True)
+    customer = models.CharField(max_length=100, blank=True)
+    phone = models.CharField(max_length=100, blank=True)
+    email = models.EmailField(max_length=100, blank=True)
+    painting = models.CharField(max_length=100, blank=True)
+    plastic = models.CharField(max_length=100, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    color = models.CharField(max_length=100, blank=True)
+    delivery = models.CharField(max_length=100, blank=True)
+    file = models.FileField(upload_to="Model/", blank=True, null=True)
+
 
 

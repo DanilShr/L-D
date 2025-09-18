@@ -1,0 +1,35 @@
+{% extends "main/index.html" %}
+{% load static %}
+{% block first_section %}
+    <section class="order-block">
+    {% for order in orders %}
+        <div class="order-info">
+            <div class="about">
+                <div style="font-size: medium">Заказ #{{ order.id }}</div>
+                <div>Время заказа {{ order.created_at }}</div>
+            </div>
+            <div class="orders">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Услуга</th>
+                            <th>Пользователь</th>
+                            <th>Статус</th>
+                            <th>Детали</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ order.service }}</td>
+                            <td>{{ order.customer }}</td>
+                            <td>{{ order.status }}</td>
+                            <td><a href="#">Подробнее</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endfor %}
+    </section>
+
+{% endblock %}

@@ -1,3 +1,5 @@
+from urllib import request
+
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LogoutView
@@ -6,9 +8,9 @@ from django.shortcuts import render, redirect
 from django.template.defaultfilters import first
 from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 
-from main.models import Services, Product
+from main.models import Services, Product, Orders
 
 
 class MainView(View):
@@ -62,8 +64,13 @@ class ServicesView(View):
         return render(request, 'main/servises.html', context=context)
 
     def post(self, request):
-        print(request.POST)  # лучше выводить конкретные данные
-        # Ваша логика обработки POST-запроса
+        data = request.POST.dict()
+        user = request.user
+        file = request.FILES['file']
+        del data['csrfmiddlewaretoken']
+        data['user'] = user
+        order = Orders.objects.create(**data, file=file)
+        order.save()
         return redirect('services')
 
 
@@ -83,3 +90,17 @@ class ProductDetailView(DetailView):
     queryset = Product.objects.all()
     context_object_name = 'product'
     template_name = 'main/product.html'
+
+
+class OrdersView(ListView):
+    model = Orders
+    context_object_name = 'orders'
+    template_name = 'main/orders.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(user=self.request.user)
+        return queryset
+
+
+
