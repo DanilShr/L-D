@@ -61,6 +61,11 @@ class ServicesView(View):
         }
         return render(request, 'main/servises.html', context=context)
 
+    def post(self, request):
+        print(request.POST)  # лучше выводить конкретные данные
+        # Ваша логика обработки POST-запроса
+        return redirect('services')
+
 
 class ProductView(View):
     def get(self, request):

@@ -440,4 +440,82 @@ h2 {
 
 .btn-primary:hover {
     background-color: #0b5ed7;
+<<<<<<< HEAD
 }
+
+
+
+
+.order-block {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 800px;
+
+}
+
+.about {
+    color: #777777;
+    font-size: small;
+    background: #333333;
+    border-radius: 2px;
+    margin-top: 10px;
+
+}
+
+.order-info {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 60%;
+}
+
+.order-detail {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.orders {
+    width: 100%;
+    border: 2px solid #333333;
+    border-radius: 2px;
+    margin-bottom: 10px;
+}
+
+.orders table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+
+.orders th {
+    background-color: #232323;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 500;
+    color: #dee2e6;
+    border-bottom: 2px solid #e0e0e0;
+    font-size: 14px;
+}
+
+.orders td {
+    padding: 12px 16px;
+    background: #404040;
+    border-bottom: 1px solid #f0f0f0;
+    color: snow;
+    font-size: 14px;
+}
+
+.orders tr:last-child td {
+    border-bottom: none;
+}
+
+.orders tr:hover {
+    background-color: #fafafa;
+}
+=======
+}
+>>>>>>> parent of 7ce638b (Create orders)
