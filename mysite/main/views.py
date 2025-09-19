@@ -10,6 +10,7 @@ from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import DetailView, ListView
 
+from main.forms import ProfileForm
 from main.models import Services, Product, Orders, Profile
 
 
@@ -115,6 +116,19 @@ class ProfileView(View):
             'profile': profile,
         }
         return render(request, 'main/profile.html', context=context)
+
+    def post(self, request):
+        if request.method == 'POST':
+            profile = Profile.objects.get(user=request.user)
+            form = ProfileForm(request.POST, request.FILES, instance=profile)
+
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect(reverse('profile'))
+        else:
+            form = ProfileForm(instance=request.user.profile)
+
+        return render(request, 'main/profile.html', {'form': form})
 
 
 
