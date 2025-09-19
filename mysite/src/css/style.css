@@ -43,13 +43,24 @@ header > div {
     align-items: center;
 }
 
-.menu > a:hover {
-    color: #0d6efd;
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
 }
+
 .menu > a {
     color: white;
     text-decoration: none;
-    margin: 0px 20px;
+    margin: 0 20px;
+    transition: all 0.3s ease;
+    padding: 8px 0;
+    position: relative;
+}
+
+.menu > a:hover {
+    color: #0d6efd;
 }
 .logo-name > p {
     color: white;
@@ -277,6 +288,8 @@ img.main-item {
     justify-content: space-around;
     align-items: flex-start;
     padding-top: 30px;
+    flex-wrap: wrap; /* Добавляем перенос элементов */
+    gap: 30px; /* Добавляем отступы между элементами */
 }
 
 .fix-container2 {
@@ -311,8 +324,9 @@ img.main-item {
     display: flex;
     justify-content: space-around;
     padding: 0 200px;
+    flex-wrap: wrap; /* Добавляем перенос */
+    box-sizing: border-box; /* Учитываем padding в ширине */
 }
-
 
 .product {
     width: 300px;
@@ -526,9 +540,6 @@ h2 {
     flex-direction: row;
     justify-content: space-around;
     min-height: 800px;
-
-
-
 }
 
 .avatar {
@@ -538,12 +549,10 @@ h2 {
     justify-content: space-evenly;
 }
 
-
 .avatar img {
-
     width: 300px;
     height: 300px;
-    border-radius:30%;
+    border-radius: 30%;
     object-fit: cover;
 }
 
@@ -553,9 +562,9 @@ h2 {
 }
 
 .profile-container {
-    width: 1000px;
+    width: 100%;
     max-width: 1200px;
-    min-width: 800px;
+    min-width: 300px; /* Уменьшил для мобильных */
     height: auto;
     min-height: 500px;
     margin-left: auto;
@@ -565,4 +574,99 @@ h2 {
     flex-direction: row;
     padding: 20px;
     box-sizing: border-box;
+}
+
+/* Адаптивность для планшетов (768px - 1024px) */
+@media (max-width: 1024px) {
+    .profile-section {
+        flex-direction: column;
+        align-items: center;
+        min-height: auto;
+        justify-content: flex-start;
+    }
+
+    .avatar {
+        margin: 20px 0;
+        align-items: center;
+    }
+
+    .avatar img {
+        width: 250px;
+        height: 250px;
+    }
+
+    .data-profile {
+        width: 100%;
+        max-width: 500px;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .profile-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+    }
+}
+
+/* Адаптивность для мобильных (320px - 767px) */
+@media (max-width: 767px) {
+    .profile-section {
+        min-height: auto;
+        padding: 10px;
+    }
+
+    .avatar {
+        margin: 15px 0;
+    }
+
+    .avatar img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .data-profile {
+        width: 100%;
+        margin-top: 15px;
+        padding: 0 10px;
+    }
+
+    .profile-container {
+        min-width: unset;
+        width: 100%;
+        padding: 10px;
+        flex-direction: column;
+    }
+
+    /* Улучшение для очень маленьких экранов */
+    @media (max-width: 480px) {
+        .avatar img {
+            width: 150px;
+            height: 150px;
+        }
+
+        .profile-container {
+            padding: 5px;
+        }
+
+        .data-profile {
+            font-size: 14px;
+        }
+    }
+}
+
+/* Для очень больших экранов */
+@media (min-width: 1600px) {
+    .profile-container {
+        max-width: 1400px;
+    }
+
+    .avatar img {
+        width: 350px;
+        height: 350px;
+    }
+
+    .data-profile {
+        width: 500px;
+    }
 }
