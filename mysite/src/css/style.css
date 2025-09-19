@@ -532,11 +532,15 @@ h2 {
 }
 
 .avatar {
+    display: flex;
+    flex-direction: column;
     margin: 40px 50px;
+    justify-content: space-evenly;
 }
 
 
 .avatar img {
+
     width: 300px;
     height: 300px;
     border-radius:30%;

@@ -111,22 +111,22 @@ class ProfileView(View):
     def get(self,request):
         user = request.user
         print(user.id)
-        profile = Profile.objects.get(user=user.id)
+        profile = Profile.objects.select_related('user').get(user=user.id)
         context = {
             'profile': profile,
         }
         return render(request, 'main/profile.html', context=context)
 
     def post(self, request):
-        if request.method == 'POST':
-            profile = Profile.objects.get(user=request.user)
-            form = ProfileForm(request.POST, request.FILES, instance=profile)
+        profile = Profile.objects.get(user=request.user)
+        if 'delete' in request.POST:
+            profile.avatar.delete()
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
 
-            if form.is_valid():
-                form.save()
-                return HttpResponseRedirect(reverse('profile'))
-        else:
-            form = ProfileForm(instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('profile'))
+
 
         return render(request, 'main/profile.html', {'form': form})
 
