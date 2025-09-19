@@ -10,14 +10,16 @@ from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import DetailView, ListView
 
-from main.models import Services, Product, Orders
+from main.models import Services, Product, Orders, Profile
 
 
 class MainView(View):
     def get(self, request):
         user = request.user
+
         context = {
             'user': user,
+
         }
         return render(request, 'main/index.html', context=context)
 
@@ -101,6 +103,19 @@ class OrdersView(ListView):
         queryset = super().get_queryset()
         queryset = queryset.filter(user=self.request.user)
         return queryset
+
+
+
+class ProfileView(View):
+    def get(self,request):
+        user = request.user
+        print(user.id)
+        profile = Profile.objects.get(user=user.id)
+        context = {
+            'profile': profile,
+        }
+        return render(request, 'main/profile.html', context=context)
+
 
 
 

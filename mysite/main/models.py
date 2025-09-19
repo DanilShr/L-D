@@ -36,4 +36,17 @@ class Orders(models.Model):
     file = models.FileField(upload_to="Model/", blank=True, null=True)
 
 
+def avatar_dir(instance, filename):
+    return f'Profile/Avatars/{instance.user.username}/{filename}'
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to=avatar_dir, blank=True, null=True)
+    phone = models.CharField(max_length=100, blank=True)
+    email = models.EmailField(max_length=100, blank=True)
+
+
+
+
+
 

@@ -1,0 +1,25 @@
+{% extends "main/index.html" %}
+{% load static %}
+{% block title %}
+    Profile
+{% endblock %}
+{% block first_section %}
+    <section class="profile-section">
+            <div class="avatar">
+                <label for="file-input" style="cursor: pointer;">
+                    <img src="{{ profile.avatar }}" alt="Выбрать файл" width="100">
+                </label>
+                <input type="file" id="file-input" style="display: none;">
+            </div>
+            <div class="data-profile">
+                <div class="mb-3">
+                    <label for="phoneInput" class="form-label">Телефон</label>
+                    <input type="tel" class="form-control bg-body-secondary" id="phoneInput" name="phone" value={{ profile.phone }} required>
+                </div>
+                <div class="mb-3">
+                    <label for="emailInput" class="form-label">Email</label>
+                    <input type="email" class="form-control bg-body-secondary" id="emailInput" name="email" value={{ profile.email }} required>
+                </div>
+            </div>
+    </section>
+{% endblock %}
