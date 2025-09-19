@@ -5,21 +5,29 @@
 {% endblock %}
 {% block first_section %}
     <section class="profile-section">
-            <div class="avatar">
-                <label for="file-input" style="cursor: pointer;">
-                    <img src="{{ profile.avatar }}" alt="Выбрать файл" width="100">
-                </label>
-                <input type="file" id="file-input" style="display: none;">
-            </div>
-            <div class="data-profile">
-                <div class="mb-3">
-                    <label for="phoneInput" class="form-label">Телефон</label>
-                    <input type="tel" class="form-control bg-body-secondary" id="phoneInput" name="phone" value={{ profile.phone }} required>
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="profile-container">
+
+                <div class="avatar">
+                    <label for="file-input" style="cursor: pointer;">
+                        <img id="avatar-preview" src="{{ profile.avatar }}" alt="Выбрать файл" width="100">
+                    </label>
+                    <input type="file" id="file-input" name="avatar" accept="image/*" style="display: none;">
                 </div>
-                <div class="mb-3">
-                    <label for="emailInput" class="form-label">Email</label>
-                    <input type="email" class="form-control bg-body-secondary" id="emailInput" name="email" value={{ profile.email }} required>
+                <div class="data-profile">
+                    <h1>{{ profile.user.username }}</h1>
+                    <div class="mb-3">
+                        <label for="phoneInput" class="form-label">Телефон</label>
+                        <input type="tel" class="form-control " id="phoneInput" name="phone" value={{ profile.phone }} required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="emailInput" class="form-label">Email</label>
+                        <input type="email" class="form-control " id="emailInput" name="email" value={{ profile.email }} required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg">Сохранить изменения</button>
                 </div>
-            </div>
+        </div>
+    </form>
     </section>
 {% endblock %}

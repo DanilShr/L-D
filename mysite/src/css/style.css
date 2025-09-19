@@ -531,7 +531,7 @@ h2 {
 }
 
 .avatar {
-    margin-top: 40px;
+    margin: 40px 50px;
 }
 
 
@@ -545,5 +545,16 @@ h2 {
 .data-profile {
     margin-top: 40px;
     width: 400px;
+}
+
+.profile-container {
+    max-width: 1000px;
+    height: 100%;
+    min-width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
 }
 
