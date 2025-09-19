@@ -45,11 +45,32 @@ header > div {
 
 .menu > a:hover {
     color: #0d6efd;
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
 }
+
 .menu > a {
     color: white;
     text-decoration: none;
-    margin: 0px 20px;
+    margin: 0 20px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.menu > a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #0d6efd;
+    transition: width 0.3s ease;
+}
+
+.menu > a:hover::after {
+    width: 100%;
 }
 .logo-name > p {
     color: white;
@@ -164,7 +185,7 @@ footer {
     display: none;
     position: absolute;
     left: 0;
-    background-color: #232323;
+    background-color: #222020;
     top: 43px;
     min-width: 150px;
     z-index: 1000;
@@ -195,25 +216,47 @@ img.main-item {
 
 }
 
+.sub-menu {
+    text-align: left;
+    padding: 0;
+    margin: 0;
+}
+
 .sub-menu li {
     list-style: none;
     margin: 0;
     padding: 0;
+    border-bottom: 1px solid #333;
+}
+
+.sub-menu li:last-child {
+    border-bottom: none;
 }
 
 .sub-menu a {
     display: block;
-    padding: 10px 15px;
+    padding: 12px 20px;
     color: #fff;
     text-decoration: none;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+    text-align: left;
 }
 
 .sub-menu a:hover {
-    background-color: #404040;
+    background-color: #2d2d2d;
+    border-left-color: #0d6efd;
+    padding-left: 25px;
 }
+
+.sub-menu form {
+    margin: 0;
+    padding: 0;
+}
+
 .sub-menu button {
     display: block;
-    padding: 10px 15px;
+    padding: 12px 20px;
     color: #fff;
     text-decoration: none;
     background: none;
@@ -223,11 +266,38 @@ img.main-item {
     cursor: pointer;
     font-family: inherit;
     font-size: inherit;
-    transition: background-color 0.3s;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
 }
 
 .sub-menu button:hover {
-    background-color: #404040;
+    background-color: #2d2d2d;
+    border-left-color: #0d6efd;
+    padding-left: 25px;
+}
+
+
+.sub-menu {
+    margin-right: auto;
+}
+
+
+.sub-menu a,
+.sub-menu button {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Небольшая тень при наведении для глубины */
+.sub-menu a:hover,
+.sub-menu button:hover {
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Активное состояние (если нужно) */
+.sub-menu a.active,
+.sub-menu button.active {
+    background-color: #0d6efd;
+    border-left-color: #fff;
 }
 
 .login_logo img {
@@ -363,25 +433,11 @@ img.main-item {
     overflow: hidden;
 }
 
-.product::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(13, 110, 253, 0.1), transparent);
-    transition: left 0.6s ease;
-}
-
-.product:hover::before {
-    left: 100%;
-}
 
 .product:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    border-color: #0d6efd;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    border-color: #444;
+    transform: translateY(-2px);
 }
 
 .product img {
@@ -393,9 +449,7 @@ img.main-item {
     transition: transform 0.3s ease;
 }
 
-.product:hover img {
-    transform: scale(1.05);
-}
+
 
 .img_product img {
     height: 180px;
@@ -586,20 +640,30 @@ h2 {
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
     width: 60%;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: #1e1e1e;
+}
+
+.order-info:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transform: translateY(-3px);
 }
 
 .order-detail {
     display: flex;
     flex-direction: column;
-
 }
 
 .orders {
     width: 100%;
-    border: 2px solid #333333;
-    border-radius: 2px;
-    margin-bottom: 10px;
+    border: 1px solid #333;
+    margin-bottom: 15px;
+    overflow: hidden;
+    background: #2d2d2d;
 }
 
 .orders table {
@@ -608,31 +672,33 @@ h2 {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-
 .orders th {
-    background-color: #232323;
-    padding: 12px 16px;
+    background: linear-gradient(145deg, #2d2d2d, #232323);
+    padding: 14px 18px;
     text-align: left;
-    font-weight: 500;
-    color: #dee2e6;
-    border-bottom: 2px solid #e0e0e0;
+    font-weight: 600;
+    color: #fff;
+    border-bottom: 2px solid #444;
     font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .orders td {
-    padding: 12px 16px;
-    background: #404040;
-    border-bottom: 1px solid #f0f0f0;
-    color: snow;
+    padding: 14px 18px;
+    background: #363636;
+    border-bottom: 1px solid #444;
+    color: #e0e0e0;
     font-size: 14px;
+    transition: background-color 0.2s ease;
 }
 
 .orders tr:last-child td {
     border-bottom: none;
 }
 
-.orders tr:hover {
-    background-color: #fafafa;
+.orders tr:hover td {
+    background: #404040;
 }
 
 .profile-section {
@@ -655,6 +721,12 @@ h2 {
     height: 300px;
     border-radius: 30%;
     object-fit: cover;
+}
+
+.avatar img:hover{
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    border-color: #444;
+    transform: translateY(-2px);
 }
 
 .data-profile {
@@ -695,6 +767,7 @@ h2 {
         width: 250px;
         height: 250px;
     }
+
 
     .data-profile {
         width: 100%;
