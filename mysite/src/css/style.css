@@ -343,23 +343,144 @@ img.main-item:hover {
     padding: 40px;
 }
 
-.servises-block {
-    width: 60%;
-}
-
 .servises-block > div {
     color: white;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    justify-content: space-around;
+    align-items: flex-start;
     padding-top: 30px;
-    gap: 30px;
 }
 
 
+.filter-group {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #433a0b;
+}
 
-.filters {
-    width: 40%;
+.filter-group:last-child {
+    border-bottom: none;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: white;
+}
+
+.price-values {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #ccc;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin: 0;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.apply-btn, .reset-btn {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.apply-btn {
+    background: #4CAF50;
+    color: white;
+}
+
+.reset-btn {
+    background: #757575;
+    color: white;
+}
+
+/* Стили для карточек товаров */
+.fix-container3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.product {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.product-image img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.product-name {
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+}
+
+.product-description {
+    font-size: 14px;
+    color: #ccc;
+    flex-grow: 1;
+}
+
+.product-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.product-actions {
+    margin-top: auto;
+}
+
+.product-btn {
+    width: 100%;
+    padding: 10px;
+    background: #ff6b35;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.product-btn:hover {
+    background: #e55a2b;
 }
 
 .fix-container2 {
@@ -434,7 +555,7 @@ img.main-item:hover {
 .catalog {
     display: flex;
     max-width: 1000px;
-    height: 100%;
+    min-height: 1000px;
     min-width: 200px;
     margin-left: auto;
     margin-right: auto;
@@ -442,8 +563,7 @@ img.main-item:hover {
 
 
 .product {
-    font-size: smaller;
-    width: 150px;
+    width: 160px;
     display: grid;
     grid-gap: 6px;
     grid-template-columns: 1fr;

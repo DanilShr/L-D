@@ -31,3 +31,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+// Скрипт для отображения текущей цены
+const priceRange = document.getElementById('priceRange');
+const currentPrice = document.getElementById('currentPrice');
+
+if (priceRange && currentPrice) {
+    priceRange.addEventListener('input', function() {
+        currentPrice.textContent = this.value;
+    });
+}
+
+// Скрипт для кнопок фильтров
+document.querySelector('.apply-btn').addEventListener('click', function() {
+    // Здесь будет логика применения фильтров
+    console.log('Фильтры применены');
+});
+
+document.querySelector('.reset-btn').addEventListener('click', function() {
+    // Сброс всех фильтров
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => checkbox.checked = false);
+    priceRange.value = 5000;
+    currentPrice.textContent = '5000';
+});

@@ -1,26 +1,80 @@
 {% extends 'main/index.html' %}
 
 {% block first_section %}
-
-    <section>
+<section>
     <div class="catalog">
         <div class="filters">
+            <div class="block-filters">
+                <!-- Фильтр по цене -->
+                <div class="filter-group">
+                    <label for="priceRange" class="form-label">Цена, руб</label>
+                    <input type="range" class="form-range" min="0" max="10000" value="5000" id="priceRange">
+                    <div class="price-values">
+                        <span>0</span>
+                        <span id="currentPrice">5000</span>
+                        <span>10000</span>
+                    </div>
+                </div>
+
+                <!-- Фильтр по категориям -->
+                <div class="filter-group">
+                    <label class="form-label">Категория</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="category"> Электроника</label>
+                        <label><input type="checkbox" name="category"> Одежда</label>
+                        <label><input type="checkbox" name="category"> Книги</label>
+                        <label><input type="checkbox" name="category"> Спорт</label>
+                    </div>
+                </div>
+
+                <!-- Фильтр по бренду -->
+                <div class="filter-group">
+                    <label class="form-label">Бренд</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="brand"> Apple</label>
+                        <label><input type="checkbox" name="brand"> Samsung</label>
+                        <label><input type="checkbox" name="brand"> Sony</label>
+                        <label><input type="checkbox" name="brand"> Nike</label>
+                    </div>
+                </div>
+
+                <!-- Фильтр по рейтингу -->
+                <div class="filter-group">
+                    <label class="form-label">Рейтинг</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="rating"> ★★★★★</label>
+                        <label><input type="checkbox" name="rating"> ★★★★☆ и выше</label>
+                        <label><input type="checkbox" name="rating"> ★★★☆☆ и выше</label>
+                    </div>
+                </div>
+
+                <!-- Кнопки фильтрации -->
+                <div class="filter-buttons">
+                    <button type="button" class="apply-btn">Применить</button>
+                    <button type="button" class="reset-btn">Сбросить</button>
+                </div>
+            </div>
         </div>
-        <div class="servises-block">
+
+        <div class="catalog-block">
             {% for products in product_list %}
             <div class="fix-container3">
                 {% for product in products %}
                 <div class="product">
-                    <div><img src="{{ product.image }}"></div>
+                    <div class="product-image">
+                        <img src="{{ product.image }}" alt="{{ product.name }}">
+                    </div>
                     <div class="product-name">{{ product.name }}</div>
                     <div class="product-description">{{ product.description }}</div>
                     <div class="product-price">{{ product.price }} руб</div>
-                    <div><button type="button" class="product-btn">В корзину</button></div>
+                    <div class="product-actions">
+                        <button type="button" class="product-btn">В корзину</button>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
             {% endfor %}
         </div>
     </div>
-    </section>
+</section>
 {% endblock %}
