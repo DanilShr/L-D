@@ -413,7 +413,7 @@ img.main-item:hover {
 }
 
 .apply-btn {
-    background: #4CAF50;
+    background: #688c6a;
     color: white;
 }
 
@@ -428,6 +428,7 @@ img.main-item:hover {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
     width: 100%;
+
 }
 
 .product {
@@ -554,22 +555,29 @@ img.main-item:hover {
 
 .catalog {
     display: flex;
+    justify-content: space-between;
+    padding: 20px 0px;
     max-width: 1000px;
     min-height: 1000px;
     min-width: 200px;
     margin-left: auto;
     margin-right: auto;
+
 }
 
 
+.catalog-block {
+    width: 80%;
+}
+
 .product {
-    width: 160px;
+    width: 200px;
     display: grid;
     grid-gap: 6px;
     grid-template-columns: 1fr;
-    grid-template-rows: 100px minmax(auto, 10px) 30px 20px;
+    grid-template-rows: 200px minmax(auto, 10px) 30px 20px;
     padding: 12px;
-    min-height: 237px;
+    min-height: 337px;
     border: 1px solid #333;
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
