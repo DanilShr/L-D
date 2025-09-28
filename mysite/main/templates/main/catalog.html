@@ -2,19 +2,25 @@
 
 {% block first_section %}
 
-    <section class="servises-block">
-    {% for products in product_list %}
-    <div class="fix-container3">
-        {% for product in products %}
-        <div class="product">
-            <img src="{{ product.image }}">
-            <h5>{{ product.name }}</h5>
-            <div>{{ product.description }}</div>
-            <div style="color: lightcyan">{{ product.price }} руб</div>
-            <button type="button" class="btn btn-primary btn-lg">В корзину</button>
+    <section>
+    <div class="catalog">
+        <div class="filters">
         </div>
-        {% endfor %}
+        <div class="servises-block">
+            {% for products in product_list %}
+            <div class="fix-container3">
+                {% for product in products %}
+                <div class="product">
+                    <div><img src="{{ product.image }}"></div>
+                    <div class="product-name">{{ product.name }}</div>
+                    <div class="product-description">{{ product.description }}</div>
+                    <div class="product-price">{{ product.price }} руб</div>
+                    <div><button type="button" class="product-btn">В корзину</button></div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
     </div>
-    {% endfor %}
     </section>
 {% endblock %}

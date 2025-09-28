@@ -74,7 +74,7 @@
                 <div class="service">
                     <h2>{{ service.name }}</h2>
                      <p>{{ service.description }}</p>
-                    <button type="button" class="btn btn-primary btn-lg" onclick="openModal()">Заказать</button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="openModal('{{ service.name }}')">Заказать</button>
                 </div>
                 <div class="service-img">
                     <img src="{{ service.image}}">

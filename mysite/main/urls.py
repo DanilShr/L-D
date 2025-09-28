@@ -1,6 +1,8 @@
 from django.contrib.auth.views import LogoutView
 from django.urls import path
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
+
 from .views import MainView, LoginView, RegisterView, MyLogoutView, ServicesView, ProductView, ProductDetailView, \
     OrdersView, ProfileView
 
@@ -20,6 +22,10 @@ urlpatterns = [
     path("orders", OrdersView.as_view(), name="orders"),
 
     path("profile",ProfileView.as_view(), name="profile" ),
+
+    path("about", TemplateView.as_view(template_name='main/about.html'), name="about"),
 ]
+
+
 
 
