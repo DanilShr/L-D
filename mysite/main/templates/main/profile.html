@@ -11,7 +11,7 @@
                 <div class="avatar">
                     <label for="file-input" style="cursor: pointer;">
                         {% if profile.avatar %}
-                            <img id="avatar-preview" src="{{ profile.avatar }}" alt="Выбрать файл" width="100">
+                            <img id="avatar-preview" src="{{ profile.avatar.url }}" alt="Выбрать файл" width="100">
                         {% else %}
                             <img id="avatar-preview" src="{% static 'profile.png'%}" alt="Выбрать файл" width="100">
                         {% endif %}

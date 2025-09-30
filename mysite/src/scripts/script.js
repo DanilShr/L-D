@@ -54,3 +54,4 @@ document.querySelector('.reset-btn').addEventListener('click', function() {
     priceRange.value = 5000;
     currentPrice.textContent = '5000';
 });
+
