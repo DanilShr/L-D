@@ -66,7 +66,7 @@
                     <div class="product-description">{{ product.description }}</div>
                     <div class="product-price">{{ product.price }} руб</div>
                     <div class="product-actions">
-                        <button type="button" class="product-btn">В корзину</button>
+                        <a href="{% url "product-detail" pk=product.id %}" type="button" class="product-btn">В корзину</a>
                     </div>
                 </div>
                 {% endfor %}

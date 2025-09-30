@@ -1,16 +1,43 @@
 {% extends 'main/index.html' %}
 {% load static %}
 {% block first_section %}
-    <section class="first-block">
-    <div class="fix-container-item">
-        <div>
-            <div>{{ product.name }}</div>
-            <div>{{ product.description }}</div>
-            <div>{{ product.price }}</div>
+    <section class="product-block">
+        <div class="fix-container-item">
+            <div class="img_product">
+                <img src="{{ product.image }}" alt="Нет изображения">
+            </div>
+            <div>
+                <div><h2>{{ product.name }}</h2></div>
+                <div>{{ product.description }}</div>
+
+                 <table class="table table-dark table-hover">
+                     <tbody>
+                     <tr>
+                         <td>Наименование</td>
+                         <td>{{ product.specifications.name }}</td>
+                     </tr>
+                     <tr>
+                         <td>Размер</td>
+                         <td>{{ product.specifications.size }}</td>
+                     </tr>
+                     <tr>
+                         <td>Покраска</td>
+                         <td>{{ product.specifications.painting }}</td>
+                     </tr>
+                     <tr>
+                         <td>Цвет</td>
+                         <td>{{ product.specifications.color }}</td>
+                     </tr>
+                     <tr>
+                         <td>Тип пластика</td>
+                         <td>{{ product.specifications.material }}</td>
+                     </tr>
+                     </tbody>
+                </table>
+                <div>{{ product.price }}</div>
+                <button class="btn btn-info add-to-cart">Add to Cart</button>
+            </div>
+
         </div>
-        <div class="img_product">
-            <img src="{{ product.image }}">
-        </div>
-    </div>
     </section>
 {% endblock %}

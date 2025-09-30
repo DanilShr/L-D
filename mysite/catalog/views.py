@@ -39,6 +39,9 @@ class ProductView(View):
 
 
 class ProductDetailView(DetailView):
-    queryset = Product.objects.all()
+    queryset = Product.objects.select_related('specifications').all()
     context_object_name = 'product'
     template_name = 'catalog/product.html'
+
+
+

@@ -8,12 +8,22 @@ class Services(models.Model):
 # def name_src(instance, filename):
 #         return f'products/{instance.name}/{filename}'
 
+class Specification(models.Model):
+    name = models.CharField(max_length=100, blank=True)
+    size = models.CharField(max_length=100, blank=True)
+    material = models.CharField(max_length=100, blank=True)
+    painting = models.CharField(max_length=100, blank=True)
+    color = models.CharField(max_length=100, blank=True)
+
+
+
 
 class Product(models.Model):
     name = models.CharField(max_length=100, blank=True)
     description = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to="images/", blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    specifications = models.OneToOneField(Specification, on_delete=models.CASCADE, blank=True, null=True)
 
 def __str__(self):
         return self.name
