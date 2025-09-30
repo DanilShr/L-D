@@ -1,0 +1,25 @@
+{% extends 'main/index.html' %}
+{% load static %}
+{% block first_section %}
+<body style="background: #232323">
+    {% include "catalog/input.html" %}
+    <section class="servises-block">
+    {% if services is None %}
+        <h2>Услуг пока нет(</h2>
+    {% else %}
+        {% for service in services %}
+            <div class="fix-container2">
+                <div class="service">
+                    <h2>{{ service.name }}</h2>
+                     <p>{{ service.description }}</p>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="openModal('{{ service.name }}')">Заказать</button>
+                </div>
+                <div class="service-img">
+                    <img src="{{ service.image.url}}">
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    </section>
+</body>
+{% endblock %}

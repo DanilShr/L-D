@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Services, Product
+from .models import Profile, Services, Product
 from django.contrib.auth.models import User
 
 
@@ -11,4 +11,8 @@ class ServiceAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name','description','image')
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('id', 'avatar','phone','email')
 
