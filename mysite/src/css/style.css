@@ -483,6 +483,23 @@ img.main-item:hover {
     font-size: 1em;
 }
 
+
+.bg-dark.pagination .page-link {
+    background-color: transparent;
+    border-color: #495057;
+    color: #fff;
+}
+
+.bg-dark.pagination .page-link:hover {
+    background-color: #495057;
+    color: #fff;
+}
+
+.bg-dark.pagination .page-item.active .page-link {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
 .service-img {
     flex-shrink: 0;
     display: flex;
@@ -506,7 +523,7 @@ img.main-item:hover {
     flex-wrap: wrap;
     gap: 30px;
     max-width: 1400px;
-    margin: 0 auto;
+    margin-bottom: 25px;
 }
 
 

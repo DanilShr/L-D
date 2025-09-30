@@ -40,12 +40,12 @@
                 </div>
                 {% if user.is_anonymous %}
                 <div class="registration">
-                    <form action="{% url 'register' %}">
+                    <div><form action="{% url 'register' %}">
                         <button type="submit" class="btn btn-outline-light" style="font-size: small; margin-right: 10px">Регистрация</button>
-                    </form>
-                    <form action="{% url "login" %}">
+                    </form></div>
+                    <div><form action="{% url "login" %}">
                         <button type="submit" class="btn btn-primary" style="font-size: small">Войти</button>
-                    </form>
+                    </form></div>
                 </div>
                 {% else %}
                 <div class="registration">
