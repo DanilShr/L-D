@@ -16,6 +16,13 @@
             </p>
             {% endif %}
             <h1>Регистрация</h1>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: #936262">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
             <div class="mb-3">
                 <label for="username">Логин:</label>
                 <input type="text" id="username" name="username" class="reg-form__input form-control" required>
