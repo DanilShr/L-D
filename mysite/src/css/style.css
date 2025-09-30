@@ -515,7 +515,7 @@ img.main-item:hover {
     justify-content: space-between;
     padding: 20px 0px;
     max-width: 1000px;
-    min-height: 1000px;
+    min-height: 860px;
     min-width: 200px;
     margin-left: auto;
     margin-right: auto;
@@ -632,6 +632,15 @@ img.main-item:hover {
     display: flex;
     padding-top: 20px;
 
+
+}
+
+
+.paginator-block {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 
@@ -839,7 +848,7 @@ h2 {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    min-height: 800px;
+    min-height: 1000px;
 }
 
 .avatar {

@@ -1,3 +1,5 @@
+from django.contrib.admin.templatetags.admin_list import pagination
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import DetailView
@@ -32,8 +34,12 @@ class ProductView(View):
         product_list = []
         for product in range(0, len(products), 3):
             product_list.append(products[product:product+3])
+
+        print(product_list)
+        paginate = Paginator(product_list, 2)
+        page = request.GET.get('page', 1)
         context = {
-            'product_list': product_list,
+            'product_list': paginate.page(page),
         }
         return render(request, 'catalog/catalog.html', context=context)
 

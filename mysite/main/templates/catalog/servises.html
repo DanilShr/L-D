@@ -2,68 +2,7 @@
 {% load static %}
 {% block first_section %}
 <body style="background: #232323">
-<div id="myModal" class="modal-custom">
-    <div class="modal-custom-content">
-        <span class="modal-close" onclick="closeModal()">&times;</span>
-        <h2>Заказ услуги</h2>
-        <div class="modal-scroll-container">
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="mb-3">
-                    <label for="nameInput" class="form-label">ФИО</label>
-                    <input type="text" class="form-control bg-light-subtle" id="nameInput" name="customer" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="emailInput" class="form-label">Email</label>
-                    <input type="email" class="form-control bg-body-secondary" id="emailInput" name="email" placeholder="name@example.com" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="phoneInput" class="form-label">Телефон</label>
-                    <input type="tel" class="form-control bg-body-secondary" id="phoneInput" name="phone" required>
-                    <div class="form-text">Мы никогда не передадим ваши данные третьим лицам</div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Покраска</label>
-                    <select class="form-select" name="painting" required>
-                        <option value="" selected disabled>Выберите тип покраски</option>
-                        <option value="mono">Монотонная покраска</option>
-                        <option value="full">Полная покраска</option>
-                        <option value="no paint">Без покраски</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Тип пластика</label>
-                    <select class="form-select" name="plastic" required>
-                        <option value="" selected disabled>Выберите тип пластика</option>
-                        <option value="PLA">PLA</option>
-                        <option value="ABS">ABS</option>
-                        <option value="PETG">PETG</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label for="colorInput" class="form-label">Выберите цвет пластика</label>
-                    <input type="color" class="form-control form-control-color" id="colorInput" name="color" value="#563d7c">
-                </div>
-
-                <div class="mb-3">
-                    <label for="fileInput" class="form-label">Загрузите модель (STL/OBJ/3MF/PLY/VRML)</label>
-                    <input class="form-control" type="file" id="fileInput" name="file" accept=".stl,.obj,.3mf,.ply,.wrl" required>
-                </div>
-                <div class="mb-3">
-                    <label for="notesInput" class="form-label">Примечание</label>
-                    <textarea class="form-control" id="notesInput" rows="3"></textarea>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-lg w-100">Отправить заказ</button>
-            </form>
-        </div>
-    </div>
-</div>
+    {% include "catalog/input.html" %}
     <section class="servises-block">
     {% if services is None %}
         <h2>Услуг пока нет(</h2>
@@ -76,7 +15,7 @@
                     <button type="button" class="btn btn-primary btn-lg" onclick="openModal('{{ service.name }}')">Заказать</button>
                 </div>
                 <div class="service-img">
-                    <img src="{{ service.image}}">
+                    <img src="{{ service.image.url}}">
                 </div>
             </div>
         {% endfor %}
