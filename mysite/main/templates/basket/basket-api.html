@@ -1,0 +1,80 @@
+{% extends 'main/index.html' %}
+{% load static %}
+
+{% block title %}
+    Корзина
+{% endblock %}
+
+{% block first_section %}
+    <div id="basket-app">
+        <h1>Корзина</h1>
+
+        <!-- Блок загрузки -->
+        <div v-if="loading">Загрузка корзины...</div>
+
+        <!-- Блок с товарами -->
+        {% verbatim %}
+            <div v-else-if="baskets.length > 0">
+                <div v-for="basket in baskets" :key="basket.id" class="basket-item">
+                    <div>ID корзины: {{ basket.id }}</div>
+                    <div>Цена: {{ basket.price }} руб.</div>
+                    <div>Количество: {{ basket.count }}</div>
+                    <div>ID товара: {{ basket.product }}</div>
+                    <button @click="removeFromBasket(basket.id)">
+                        Удалить
+                    </button>
+                </div>
+            </div>
+
+            <div v-else>
+                <h2>Товаров в корзине нет</h2>
+            </div>
+        {% endverbatim %}
+    </div>
+
+    <!-- Подключаем Vue -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+        const { createApp} = Vue;
+
+        createApp ({
+            data() {
+                return {
+                    baskets: [],
+                    loading: true
+                }
+            },
+
+            methods: {
+                async loadBasket() {
+                    this.loading = true
+                    try {
+                        const response = await fetch('api/basket');
+                        this.baskets = await response.json();
+                    }
+                    catch (error) {
+                        console.log('Ошибка', error)
+                    }
+                    this.loading = false
+                },
+
+                async removeFromBasket(basketId) {
+                    try {
+                        await fetch(`/api/basket/${basketId}/`, {
+                            method: 'DELETE',
+                        });
+                        this.baskets = this.baskets.filter(item => item.id !== basketId);
+                    }
+                    catch (error) {
+                        console.log('Ошибка',error)
+                    }
+
+                }
+            },
+            mounted() {
+                this.loadBasket();
+            }
+        }).mount('#basket-app');
+    </script>
+{% endblock %}

@@ -57,3 +57,5 @@ class ProductDetailView(DetailView):
 
 
 
+
+
