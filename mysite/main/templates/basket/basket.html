@@ -1,0 +1,24 @@
+{% extends 'main/index.html' %}
+{% load static %}
+
+{% block title %}
+    Корзина
+{% endblock %}
+
+{% block first_section %}
+    <h1>Корзина</h1>
+    {% if baskets %}
+        {% for basket in baskets %}
+            <div><img style="width: 80px; height: 100px; " src="{{ basket.product.image.url }}"></div>
+            <div>{{ basket.product.name }}</div>
+            <div>{{ basket.price }}</div>
+            <div>{{ basket.count }}</div>
+            <form action="{% url 'basket' %}" method="get">
+                <button type="submit"><img src="{% static 'delete.png' %}"></button>
+            </form>
+        {% endfor %}
+    {% else %}
+        <h2>Товаров в корзине нет</h2>
+    {% endif %}
+
+{% endblock %}

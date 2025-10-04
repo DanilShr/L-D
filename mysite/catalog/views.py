@@ -2,7 +2,7 @@ from django.contrib.admin.templatetags.admin_list import pagination
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.views import View
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 
 from main.models import Services, Product
 from main.models import Orders
@@ -28,20 +28,26 @@ class ServicesView(View):
         return redirect('services')
 
 
-class ProductView(View):
-    def get(self, request):
-        products = Product.objects.all()
-        product_list = []
-        for product in range(0, len(products), 3):
-            product_list.append(products[product:product+3])
+class ProductView(ListView):
+    model = Product
+    template_name = 'catalog/catalog.html'
+    context_object_name = 'product_list'
+    paginate_by = 2
 
-        print(product_list)
-        paginate = Paginator(product_list, 2)
-        page = request.GET.get('page', 1)
-        context = {
-            'product_list': paginate.page(page),
-        }
-        return render(request, 'catalog/catalog.html', context=context)
+    def get_queryset(self):
+        filters = self.request.GET.getlist('type')
+
+        queryset = super().get_queryset().select_related('specifications')
+        if filters:
+            queryset = queryset.filter(
+                specifications__material__in=filters
+            ).distinct()
+        product_list = []
+        for product in range(0, len(queryset), 3):
+            product_list.append(queryset[product:product+3])
+        return product_list
+
+
 
 
 class ProductDetailView(DetailView):
