@@ -943,8 +943,6 @@ h2 {
 }
 
 
-
-
 .basket-button {
     display: flex;
     align-items: center;
@@ -952,17 +950,18 @@ h2 {
 
 .basket-image {
     height: 200px;
-    width: 200px;
+    min-width: 150px;
     object-fit: contain;
     background: #2a2a2a;
     border-radius: 8px;
+    margin-right: 25px;
 }
 
 .basket-controls {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 10px 0;
+    margin: 10px 15px 10px 0 ;
 }
 
 .basket-btn {

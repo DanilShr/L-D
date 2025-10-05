@@ -21,8 +21,8 @@
                             <img :src="basket.product.image" class="basket-image">
                             <div class="basket-info">
                                 <div><h4>{{ basket.product.name }}</h4></div>
-                                <div>Цена: {{ basket.price }} руб.</div>
-                                <div class="price-one">{{ basket.product.price }} р. / шт.</div>
+                                <div>Цена: {{ basket.price }} ₽</div>
+                                <div class="price-one">{{ basket.product.price }} ₽ / шт.</div>
                             </div>
                         </div>
                         <div class="basket-controls">
@@ -32,8 +32,8 @@
                         </div>
                     </div>
                     <div class="basket-final">
-                        <h4>Итого: {{ totalCount }} {{ totalCountText}}</h4>
-                        <h4>Общая стоимость: {{ totalPrice }}</h4>
+                        <h5>Итого: {{ totalCount }} {{ totalCountText}}</h5>
+                        <h5>Общая стоимость: {{ totalPrice }} ₽</h5>
                         <button class="btn btn-primary btn-lg">Перейти к оформлению</button>
                     </div>
                 </div>
