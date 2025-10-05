@@ -1,29 +1,61 @@
 {% extends 'main/index.html' %}
 
 {% block first_section %}
-<section>
-    <div class="catalog">
-    {% include "catalog/filters.html" %}
-        <div class="catalog-block">
-            {% for products in page_obj  %}
-            <div class="fix-container3">
-                {% for product in products %}
-                <div class="product">
-                    <div class="product-image">
-                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    <section>
+        <div class="catalog">
+        {% include "catalog/filters.html" %}
+            <div id="app"  class="catalog-block">
+                {% for products in page_obj  %}
+                <div class="fix-container3">
+                    {% for product in products %}
+                    <div class="product">
+                        <div class="product-image">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        </div>
+                        <div class="product-name"><a href="{% url "product-detail" pk=product.id %}">{{ product.name }}</a></div>
+                        <div class="product-description">{{ product.description}}</div>
+                        <div class="product-price">{{ product.price }} руб</div>
+                        <div class="product-actions">
+                            <button class="product-btn"
+                            data-product-id="{{ product.id }}"
+                            @click="addBasket($event)">В корзину</button>
+                        </div>
                     </div>
-                    <div class="product-name"><a href="{% url "product-detail" pk=product.id %}">{{ product.name }}</a></div>
-                    <div class="product-description">{{ product.description}}</div>
-                    <div class="product-price">{{ product.price }} руб</div>
-                    <div class="product-actions">
-                        <a href="#" type="button" class="product-btn">В корзину</a>
-                    </div>
+                    {% endfor %}
                 </div>
                 {% endfor %}
             </div>
-            {% endfor %}
         </div>
-    </div>
-    <div class="paginator-block">{% include "main/pagination.html" %}</div>
-</section>
+        <div class="paginator-block">{% include "main/pagination.html" %}</div>
+    </section>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue;
+
+        createApp ({
+            methods: {
+                getCSRFToken() {
+                    const cookieValue = document.cookie
+                        .split('; ')
+                        .find(row => row.startsWith('csrftoken='))
+                        ?.split('=')[1];
+                    return cookieValue;
+                },
+                async addBasket(event) {
+                    const productId = event.target.getAttribute('data-product-id');
+                    await fetch('api/basket/', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': this.getCSRFToken(),
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            product: parseInt(productId),
+                        })
+                    })
+                }
+            }
+        }).mount('#app');
+
+    </script>
 {% endblock %}

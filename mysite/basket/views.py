@@ -64,17 +64,33 @@ class BasketApiView(ModelViewSet):
             return Response(BasketSerializer(instance).data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
-        baksetID, product = request.data['basket'], request.data['product']
-        print(baksetID, product)
-        product = Product.objects.get(id=product)
-        basket = Basket.objects.get(id=baksetID, user=request.user)
-        if basket:
+        data = request.data
+        print(data)
+        if 'basket' in data:
+            baksetID = data.get('basket')
+            product = data.get('product')
+            product = Product.objects.get(id=product)
+            basket = Basket.objects.get(id=baksetID, user=request.user)
             basket.count += 1
             basket.price += product.price
             basket.save()
             return Response(BasketSerializer(basket).data, status=status.HTTP_200_OK)
         else:
-            return super().create(request, *args, **kwargs)
+            product = data.get('product')
+            product = Product.objects.get(id=product)
+            basket, create = Basket.objects.get_or_create(user=request.user, product=product, defaults={
+                'user': request.user,
+                'product': product,
+                'price': product.price,
+                'count': 1
+            })
+            if not create:
+                print('update')
+                basket.count += 1
+                basket.price += product.price
+                basket.save()
+            return Response(BasketSerializer(basket).data, status=status.HTTP_200_OK)
+
 
 
 

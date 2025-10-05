@@ -102,7 +102,7 @@ header > div {
 section {
     background-color: #232323;
     padding: 0px 20px;
-    height: 100vh;
+    min-height: 100vh;
 }
 .first-block > div {
     color: white;

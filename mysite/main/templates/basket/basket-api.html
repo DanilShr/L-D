@@ -77,7 +77,7 @@
                 async loadBasket() {
                     this.loading = true
                     try {
-                        const response = await fetch('api/basket');
+                        const response = await fetch('api/basket/');
                         this.baskets = await response.json();
                     }
                     catch (error) {
