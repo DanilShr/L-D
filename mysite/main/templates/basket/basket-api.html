@@ -6,33 +6,44 @@
 {% endblock %}
 
 {% block first_section %}
-    <div id="basket-app">
-        <h1>Корзина</h1>
+    <section class="first-section">
+        <div id="basket-app" class="basket-app">
+            <h1>Корзина</h1>
 
-        <!-- Блок загрузки -->
-        <div v-if="loading">Загрузка корзины...</div>
+            <!-- Блок загрузки -->
+            <div v-if="loading">Загрузка корзины...</div>
 
-        <!-- Блок с товарами -->
-        {% verbatim %}
-            <div v-else-if="baskets.length > 0">
-                <div v-for="basket in baskets" :key="basket.id" class="basket-item">]
-                    <img :src="basket.product.image" class="basket-image">
-                    <div>ID корзины: {{ basket.id }}</div>
-                    <div>Цена: {{ basket.price }} руб.</div>
-                    <div>Количество: {{ basket.count }}</div>
-                    <div>ID товара: {{ basket.product }}</div>
-                    <button @click="removeFromBasket(basket.id)">
-                        Удалить
-                    </button>
-                    <button @click="addBasket(basket.id, basket.product.id)"></button>
+            <!-- Блок с товарами -->
+            {% verbatim %}
+                <div v-else-if="baskets.length > 0">
+                    <div v-for="basket in baskets" :key="basket.id" class="basket-item">
+                        <div class="basket-block">
+                            <img :src="basket.product.image" class="basket-image">
+                            <div class="basket-info">
+                                <div><h4>{{ basket.product.name }}</h4></div>
+                                <div>Цена: {{ basket.price }} руб.</div>
+                                <div class="price-one">{{ basket.product.price }} р. / шт.</div>
+                            </div>
+                        </div>
+                        <div class="basket-controls">
+                            <button class="basket-btn" @click="removeFromBasket(basket.id)">-</button>
+                            <div class="basket-count">{{ basket.count }}</div>
+                            <button class="basket-btn" @click="addBasket(basket.id, basket.product.id)">+</button>
+                        </div>
+                    </div>
+                    <div class="basket-final">
+                        <h4>Итого: {{ totalCount }} {{ totalCountText}}</h4>
+                        <h4>Общая стоимость: {{ totalPrice }}</h4>
+                        <button class="btn btn-primary btn-lg">Перейти к оформлению</button>
+                    </div>
                 </div>
-            </div>
 
-            <div v-else>
-                <h2>Товаров в корзине нет</h2>
-            </div>
-        {% endverbatim %}
-    </div>
+                <div v-else>
+                    <h2>Товаров в корзине нет</h2>
+                </div>
+            {% endverbatim %}
+        </div>
+    </section>
 
     <!-- Подключаем Vue -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -44,7 +55,21 @@
             data() {
                 return {
                     baskets: [],
-                    loading: true
+                    loading: true,
+                }
+            },
+            computed: {
+                totalCount() {
+                    return this.baskets.reduce((total, basket) => total + basket.count, 0);
+                },
+                totalPrice() {
+                    return this.baskets.reduce((total, basket) => total + (basket.price * basket.count), 0);
+                },
+                totalCountText() {
+                    const count = this.totalCount;
+                    if (count === 1) return 'товар';
+                    if (count >= 2 && count <= 4) return 'товара';
+                    return 'товаров';
                 }
             },
 
