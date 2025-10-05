@@ -51,6 +51,27 @@
                 </div>
                 {% else %}
                 <div class="registration">
+                    <div class="basket-widget">
+                        <a href="{% url 'basket' %}" class="basket-link">
+                            <!-- Счетчик сверху -->
+                            <div class="basket-counter" v-if="totalCount > 0">2</div>
+
+                            <!-- SVG корзины -->
+                            <svg class="basket-svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <!-- Основная часть корзины -->
+                                <path d="M8 8L6 12H26L24 8H8Z" fill="white" stroke="white" stroke-width="1"/>
+                                <!-- Тело корзины -->
+                                <path d="M6 12L5 28H27L26 12H6Z" fill="none" stroke="white" stroke-width="2"/>
+                                <!-- Ручка -->
+                                <path d="M11 8C11 5.5 13.5 4 16 4C18.5 4 21 5.5 21 8" stroke="white" stroke-width="1.5" fill="none"/>
+                            </svg>
+
+                            <!-- Текст под корзиной -->
+                            <div class="basket-text">
+                                <div class="basket-price">10000 ₽</div>
+                            </div>
+                        </a>
+                    </div>
                     {% if user.profile.avatar %}
                         <img class="main-item" src="{{ user.profile.avatar.url}}" href="javascript:void(0);" tabindex="1">
                     {% else %}

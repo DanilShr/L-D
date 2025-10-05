@@ -9,9 +9,8 @@ router = DefaultRouter()
 router.register(r'basket', BasketApiView)
 
 urlpatterns = [
-    path("basket", BasketView.as_view(), name="basket"),
 
-    path('basket-api', TemplateView.as_view(template_name="basket/basket-api.html"), name="basket-api"),
+    path('basket', TemplateView.as_view(template_name="basket/basket-api.html"), name="basket"),
 
     path('api/', include(router.urls))
 
