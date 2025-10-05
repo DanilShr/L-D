@@ -16,6 +16,7 @@
         {% verbatim %}
             <div v-else-if="baskets.length > 0">
                 <div v-for="basket in baskets" :key="basket.id" class="basket-item">]
+                    <img :src="basket.product.image" class="basket-image">
                     <div>ID корзины: {{ basket.id }}</div>
                     <div>Цена: {{ basket.price }} руб.</div>
                     <div>Количество: {{ basket.count }}</div>
@@ -23,7 +24,7 @@
                     <button @click="removeFromBasket(basket.id)">
                         Удалить
                     </button>
-                    <button @click="addBasket(basket.id, basket.product)">
+                    <button @click="addBasket(basket.id, basket.product.id)"></button>
                 </div>
             </div>
 

@@ -49,7 +49,7 @@ class BasketApiView(ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.filter(user=self.request.user)
+        queryset = queryset.select_related('product').filter(user=self.request.user)
         return queryset
 
     def destroy(self, request, *args, **kwargs):
@@ -65,6 +65,7 @@ class BasketApiView(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         baksetID, product = request.data['basket'], request.data['product']
+        print(baksetID, product)
         product = Product.objects.get(id=product)
         basket = Basket.objects.get(id=baksetID, user=request.user)
         if basket:
