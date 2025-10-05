@@ -15,7 +15,7 @@
         <!-- Блок с товарами -->
         {% verbatim %}
             <div v-else-if="baskets.length > 0">
-                <div v-for="basket in baskets" :key="basket.id" class="basket-item">
+                <div v-for="basket in baskets" :key="basket.id" class="basket-item">]
                     <div>ID корзины: {{ basket.id }}</div>
                     <div>Цена: {{ basket.price }} руб.</div>
                     <div>Количество: {{ basket.count }}</div>
@@ -23,6 +23,7 @@
                     <button @click="removeFromBasket(basket.id)">
                         Удалить
                     </button>
+                    <button @click="addBasket(basket.id, basket.product)">
                 </div>
             </div>
 
@@ -58,16 +59,52 @@
                     }
                     this.loading = false
                 },
-
+                getCSRFToken() {
+                    const cookieValue = document.cookie
+                        .split('; ')
+                        .find(row => row.startsWith('csrftoken='))
+                        ?.split('=')[1];
+                    return cookieValue;
+                },
                 async removeFromBasket(basketId) {
                     try {
-                        await fetch(`/api/basket/${basketId}/`, {
+                        const response = await fetch(`/api/basket/${basketId}/`, {
                             method: 'DELETE',
+                            headers: {
+                                'X-CSRFToken': this.getCSRFToken(),
+                                'Content-Type': 'application/json'
+                            }
                         });
-                        this.baskets = this.baskets.filter(item => item.id !== basketId);
+                        if (response.status === 204) {
+                           await this.loadBasket()
+                        }
+                        else if (response.status === 200) {
+                            const updateItem = await response.json()
+
+                            const index = this.baskets.findIndex(item=>item.id===basketId)
+                            this.baskets[index] = updateItem
+                        }
                     }
                     catch (error) {
                         console.log('Ошибка',error)
+                    }
+                },
+                async addBasket(basketId, product) {
+                    const response = await fetch('api/basket/', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': this.getCSRFToken(),
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            product: product,
+                            basket: basketId
+                        })
+                    });
+                    if (response.status === 200) {
+                        const itemID = await response.json()
+                        const index = this.baskets.findIndex(item=>item.id===basketId)
+                        this.baskets[index] = itemID
                     }
 
                 }

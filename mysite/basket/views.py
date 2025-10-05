@@ -59,8 +59,22 @@ class BasketApiView(ModelViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             instance.count -= 1
+            instance.price -= instance.product.price
             instance.save()
             return Response(BasketSerializer(instance).data, status=status.HTTP_200_OK)
+
+    def create(self, request, *args, **kwargs):
+        baksetID, product = request.data['basket'], request.data['product']
+        product = Product.objects.get(id=product)
+        basket = Basket.objects.get(id=baksetID, user=request.user)
+        if basket:
+            basket.count += 1
+            basket.price += product.price
+            basket.save()
+            return Response(BasketSerializer(basket).data, status=status.HTTP_200_OK)
+        else:
+            return super().create(request, *args, **kwargs)
+
 
 
 
