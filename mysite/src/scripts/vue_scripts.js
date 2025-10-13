@@ -16,7 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 return count;
             },
             totalPrice() {
-                return this.baskets.reduce((total, basket) => total + (basket.price * basket.count), 0);
+                const price = this.baskets.reduce((total, basket) => total + (basket.price * basket.count), 0);
+                if (price === 0) return 'Пусто'
+                else return price
             },
             totalCountText() {
                 const count = this.totalCount;
@@ -47,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return cookieValue;
             },
             async removeFromBasket(basketId, type) {
+                this.showNotification('Товары удалёны', 'error')
                 try {
                     const response = await fetch(`/api/basket/${basketId}/`, {
                         method: 'DELETE',
@@ -114,6 +117,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     notification.remove();
                 }, 3000);
             },
+
+
             async addBasketNew(event) {
                 const productId = event.target.getAttribute('data-product-id');
                 const response = await fetch('api/basket/', {
@@ -129,10 +134,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (response.ok) {
                     this.showNotification('Товар добавлен в корзину!', 'success');
                     const item = await response.json()
-                    const basketId = item.id
-                    const index = this.baskets.findIndex(item=>item.id===basketId)
-                    this.baskets[index] = item
-                    console.log(item)
+                    if (this.baskets.length > 0) {
+                        const basketId = item.id
+                        const index = this.baskets.findIndex(item=>item.id===basketId)
+                        console.log(index)
+                        if (index > 0) {
+                            console.log('добавляем')
+                            this.baskets[index] = item
+                        }
+                        else {
+                            console.log('создаем')
+                            await this.loadBasket()
+                        }
+
+                    }
+                    else {
+                        await this.loadBasket()
+                    }
+
 
                 } else {
                     this.showNotification('Ошибка при добавлении', 'error');
