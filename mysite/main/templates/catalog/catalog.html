@@ -8,7 +8,7 @@
                 {% for products in page_obj  %}
                 <div class="fix-container3">
                     {% for product in products %}
-                    <div class="product">
+                    <div v='loading' class="product">
                         <div class="product-image">
                             <img src="{{ product.image.url }}" alt="{{ product.name }}">
                         </div>
@@ -18,7 +18,7 @@
                         <div class="product-actions">
                             <button class="product-btn"
                             data-product-id="{{ product.id }}"
-                            @click="addBasket($event)">В корзину</button>
+                            @click="addBasketNew($event)">В корзину</button>
                         </div>
                     </div>
                     {% endfor %}
@@ -28,61 +28,4 @@
         </div>
         <div class="paginator-block">{% include "main/pagination.html" %}</div>
     </section>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script>
-        const { createApp } = Vue;
-
-        createApp ({
-            methods: {
-                getCSRFToken() {
-                    const cookieValue = document.cookie
-                        .split('; ')
-                        .find(row => row.startsWith('csrftoken='))
-                        ?.split('=')[1];
-                    return cookieValue;
-                },
-                async addBasket(event) {
-                    const productId = event.target.getAttribute('data-product-id');
-                    const response = await fetch('api/basket/', {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRFToken': this.getCSRFToken(),
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            product: parseInt(productId),
-                        })
-                    });
-                    if (response.ok) {
-                        this.showNotification('Товар добавлен в корзину!', 'success');
-                    } else {
-                        this.showNotification('Ошибка при добавлении', 'error');
-                    }
-                },
-                showNotification(message, type = 'success') {
-                    
-                    const notification = document.createElement('div');
-                    notification.textContent = message;
-                    notification.style.cssText = `
-                        position: fixed;
-                        top: 20px;
-                        right: 20px;
-                        padding: 15px 20px;
-                        background: ${type === 'success' ? '#4CAF50' : '#f44336'};
-                        color: white;
-                        border-radius: 5px;
-                        z-index: 1000;
-                        animation: slideIn 0.3s ease;
-                    `;
-
-                    document.body.appendChild(notification);
-
-                    setTimeout(() => {
-                        notification.remove();
-                    }, 3000);
-                }
-            }
-        }).mount('#app');
-
-    </script>
 {% endblock %}
