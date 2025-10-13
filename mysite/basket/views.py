@@ -54,10 +54,14 @@ class BasketApiView(ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        if instance.count <= 1:
+        data = request.data
+        print(data)
+        if instance.count <= 1 or data.get("type") == 'all':
+            print('полное удаление')
             instance.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
+            print('мягкое удаление')
             instance.count -= 1
             instance.price -= instance.product.price
             instance.save()

@@ -937,7 +937,7 @@ h2 {
     position: absolute;
     top: 5px;
     right: 5px;
-    background: #FF4444;
+    background: #0b0d53;
     color: white;
     border-radius: 50%;
     width: 20px;
@@ -971,7 +971,7 @@ h2 {
 .basket-price {
     font-size: 11px;
     font-weight: bold;
-    color: #FFD700; /* золотой */
+    color: #efeeed; /* золотой */
 }
 
 .basket-label {
@@ -1048,6 +1048,27 @@ h2 {
     justify-content: center;
     transition: all 0.3s ease;
 }
+
+.basket-btn_rem {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 20%;
+    background: #853636;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.basket-btn_rem:hover {
+    background: #972929;
+    transform: scale(1.1);
+}
+
 .basket-info div {
     margin-bottom: 10px;
 }

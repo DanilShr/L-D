@@ -46,14 +46,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     ?.split('=')[1];
                 return cookieValue;
             },
-            async removeFromBasket(basketId) {
+            async removeFromBasket(basketId, type) {
                 try {
                     const response = await fetch(`/api/basket/${basketId}/`, {
                         method: 'DELETE',
+
                         headers: {
                             'X-CSRFToken': this.getCSRFToken(),
                             'Content-Type': 'application/json'
-                        }
+                        },
+
+                        body: JSON.stringify({
+                            type: type
+                        })
                     });
                     if (response.status === 204) {
                         await this.loadBasket()
