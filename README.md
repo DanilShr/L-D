@@ -2,7 +2,8 @@
 
 Сервис для заказа услуг 3D-печати. Проект находится в активной разработке.
 
-<img width="1294" height="1213" alt="image" src="https://github.com/user-attachments/assets/073999d5-6595-47bc-b729-798d8302232c" />
+<img width="1375" height="1263" alt="image" src="https://github.com/user-attachments/assets/712c25f3-ba92-4554-8b47-7d4b387602db" />
+
 
 
 ## 🚀 Функциональность
