@@ -122,6 +122,7 @@ section {
     background-color: #232323;
     padding: 0px 20px;
     min-height: 100vh;
+    padding-top: 50px;
 }
 .first-block > div {
     color: white;
@@ -392,6 +393,7 @@ img.main-item:hover {
     justify-content: space-around;
     align-items: flex-start;
     padding-top: 30px;
+    margin-top: 15px;
 }
 
 
@@ -455,15 +457,22 @@ img.main-item:hover {
 }
 
 .apply-btn {
-    background: #688c6a;
+    background: #579a5b;
     color: white;
+}
+
+.apply-btn:hover {
+   background: #336e34;
 }
 
 .reset-btn {
-    background: #757575;
+    background: #914747;
     color: white;
 }
 
+.reset-btn:hover {
+    background: #633030;
+}
 /* Стили для карточек товаров */
 .fix-container3 {
     display: grid;
@@ -566,7 +575,7 @@ img.main-item:hover {
 .catalog {
     display: flex;
     justify-content: space-between;
-    padding: 20px 0px;
+    padding-top: 50px;
     max-width: 1000px;
     min-height: 860px;
     min-width: 200px;
@@ -943,6 +952,7 @@ h2 {
     flex-direction: row;
     padding: 20px;
     box-sizing: border-box;
+    gap: 100px
 }
 
 .basket-widget {
