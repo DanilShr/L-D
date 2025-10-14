@@ -7,7 +7,7 @@
 
 {% block first_section %}
     <section class="first-section">
-        <div id="basket-app" class="basket-app">
+        <div class="basket-app">
             <h1>Корзина</h1>
 
             <!-- Блок загрузки -->
@@ -26,12 +26,14 @@
                             </div>
                         </div>
                         <div class="basket-controls">
-                            <button class="basket-btn" @click="removeFromBasket(basket.id)">-</button>
+                            <button class="basket-btn_rem" @click="removeFromBasket(basket.id, 'all')">x</button>
+                            <button class="basket-btn" @click="removeFromBasket(basket.id, 'one')">-</button>
                             <div class="basket-count">{{ basket.count }}</div>
                             <button class="basket-btn" @click="addBasket(basket.id, basket.product.id)">+</button>
                         </div>
                     </div>
                     <div class="basket-final">
+                        <div class="basket-counter" v-text="totalCount"></div>
                         <h5>Итого: {{ totalCount }} {{ totalCountText}}</h5>
                         <h5>Общая стоимость: {{ totalPrice }} ₽</h5>
                         <button class="btn btn-primary btn-lg">Перейти к оформлению</button>
@@ -44,100 +46,4 @@
             {% endverbatim %}
         </div>
     </section>
-
-    <!-- Подключаем Vue -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
-    <script>
-        const { createApp} = Vue;
-
-        createApp ({
-            data() {
-                return {
-                    baskets: [],
-                    loading: true,
-                }
-            },
-            computed: {
-                totalCount() {
-                    return this.baskets.reduce((total, basket) => total + basket.count, 0);
-                },
-                totalPrice() {
-                    return this.baskets.reduce((total, basket) => total + (basket.price * basket.count), 0);
-                },
-                totalCountText() {
-                    const count = this.totalCount;
-                    if (count === 1) return 'товар';
-                    if (count >= 2 && count <= 4) return 'товара';
-                    return 'товаров';
-                }
-            },
-
-            methods: {
-                async loadBasket() {
-                    this.loading = true
-                    try {
-                        const response = await fetch('api/basket/');
-                        this.baskets = await response.json();
-                    }
-                    catch (error) {
-                        console.log('Ошибка', error)
-                    }
-                    this.loading = false
-                },
-                getCSRFToken() {
-                    const cookieValue = document.cookie
-                        .split('; ')
-                        .find(row => row.startsWith('csrftoken='))
-                        ?.split('=')[1];
-                    return cookieValue;
-                },
-                async removeFromBasket(basketId) {
-                    try {
-                        const response = await fetch(`/api/basket/${basketId}/`, {
-                            method: 'DELETE',
-                            headers: {
-                                'X-CSRFToken': this.getCSRFToken(),
-                                'Content-Type': 'application/json'
-                            }
-                        });
-                        if (response.status === 204) {
-                           await this.loadBasket()
-                        }
-                        else if (response.status === 200) {
-                            const updateItem = await response.json()
-
-                            const index = this.baskets.findIndex(item=>item.id===basketId)
-                            this.baskets[index] = updateItem
-                        }
-                    }
-                    catch (error) {
-                        console.log('Ошибка',error)
-                    }
-                },
-                async addBasket(basketId, product) {
-                    const response = await fetch('api/basket/', {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRFToken': this.getCSRFToken(),
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            product: product,
-                            basket: basketId
-                        })
-                    });
-                    if (response.status === 200) {
-                        const itemID = await response.json()
-                        const index = this.baskets.findIndex(item=>item.id===basketId)
-                        this.baskets[index] = itemID
-                    }
-
-                }
-            },
-            mounted() {
-                this.loadBasket();
-            }
-        }).mount('#basket-app');
-    </script>
 {% endblock %}
