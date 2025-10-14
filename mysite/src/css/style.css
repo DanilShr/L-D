@@ -64,6 +64,25 @@ header > div {
     position: relative;
 }
 
+.carousel-div {
+    height: 600px;
+    width: 1000px;
+}
+
+.carousel slide {
+    padding: 20px;
+}
+
+.carousel-div-item {
+    display: flex;
+    padding: 20px;
+    flex-direction: row;
+background: #33283d;
+background: radial-gradient(circle, rgba(51, 40, 61, 1) 0%, rgba(41, 33, 51, 1) 33%, rgba(35, 35, 35, 1) 100%);
+    column-gap: 34px;
+}
+
+
 .menu > a::after {
     content: '';
     position: absolute;
@@ -149,20 +168,36 @@ section {
     margin-bottom: 20px;
 }
 .carousel-div .carousel-item img {
-    max-width: 1000px;
-    max-height: 600px;
+    max-width: 550px;
+    max-height: 400px;
     min-height: 200px;
-    min-width: 600px;
+    min-width: 400px;
     object-fit: cover;
+    border-radius: 10px;
 }
 .carousel {
     color: white;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
     align-items: center;
     padding: 50px 250px;
+
 }
+
+.carousel-info {
+    width: 500px;
+    display: grid;
+    grid-template-rows: 80px 270px;
+    padding-right: 80px;
+}
+
+.carousel-info p {
+    font-style: italic;
+    font-size: medium;
+}
+
+
 .main_img img {
     border-radius: 10px;
 }
@@ -193,7 +228,7 @@ footer {
     position: absolute;
     left: 0;
     background-color: #222020;
-    top: 43px;
+    top: 85px;
     min-width: 150px;
     z-index: 1000;
     margin-top: 5px;
