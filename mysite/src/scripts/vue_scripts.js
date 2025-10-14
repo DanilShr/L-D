@@ -16,7 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 return count;
             },
             totalPrice() {
-                const price = this.baskets.reduce((total, basket) => total + (basket.price * basket.count), 0);
+                const price = this.baskets.reduce((total, basket) => total + basket.price * 1, 0);
+                console.log('Сумма', price)
                 if (price === 0) return 'Пусто'
                 else return price
             },

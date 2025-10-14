@@ -12,11 +12,9 @@
                     <div>{{ product.description|default:"Нет описания" }}</div>
                     <div class="pay-product">
                         <div>Цена: {{ product.price }}</div>
-                        <form action="{% url 'basket' %}" method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <input type="hidden" name="product_id" value="{{ product.id }}">
-                            <button type="submit" class="product-btn" style="width: 150px; margin-top: 15px">В корзину</button>
-                        </form>
+                        <button class="product-btn"
+                        data-product-id="{{ product.id }}"
+                        @click="addBasketNew($event)">В корзину</button>
                     </div>
                 </div>
 
