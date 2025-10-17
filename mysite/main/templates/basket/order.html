@@ -1,0 +1,60 @@
+{% extends 'main/index.html' %}
+
+{% block title %}
+    Заказ
+{% endblock %}
+
+{% block first_section %}
+    <section class="section">
+    <div class="fix-container-4">
+        <h1>Доставка</h1>
+        <div class="mb-3">
+          <label for="exampleFormControlInput2" class="form-label">ФИО</label>
+          <input type="email" class="form-control" id="exampleFormControlInput2" placeholder="name@example.com">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Адрес электронной почты</label>
+          <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+          <label class="form-check-label" for="flexRadioDefault1">
+            Самовывоз
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+          <label class="form-check-label" for="flexRadioDefault2">
+            Доставка в пределах города
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" checked>
+          <label class="form-check-label" for="flexRadioDefault3">
+            Доставка в регионы
+          </label>
+        </div>
+        <div>
+
+        </div>
+{% verbatim %}
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Адрес доставки</label>
+          <input v-model="geo" @input="geoDecode" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                <button v-for="add in address"
+                    :key="add.id"
+                    @click="updateGeo(add)"
+                    class="clickable-item">{{add}}
+                </button>
+        </div>{% endverbatim %}
+        <div style="width: 500px; height: 400px;">
+            <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor:%3A053bd947d462cc1a45aeba4070defff75501905071c0eaf68436ac9976ec698c&amp;width=602&amp;height=400&amp;lang=ru_RU&amp;scroll=true&amp">
+            </script>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary" style="font-size: small">Оформить</button>
+        </form>
+    </div>
+    </section>
+{% endblock %}

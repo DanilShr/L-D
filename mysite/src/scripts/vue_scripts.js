@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
             return {
                 baskets: [],
                 loading: true,
+                api: 'aad9b4e7-a06a-4ada-a44b-399f65afc8dc',
+                geo: '',
+                address: [],
             }
         },
         computed: {
@@ -31,6 +34,19 @@ document.addEventListener('DOMContentLoaded', function() {
         },
 
         methods: {
+            async geoDecode(){
+                const response = await fetch(`https://geocode-maps.yandex.ru/v1/?apikey=aad9b4e7-a06a-4ada-a44b-399f65afc8dc&geocode=${this.geo}&format=json`)
+                const data = await response.json()
+                const features = data.response.GeoObjectCollection.featureMember;
+                this.address = features.map(f => f.GeoObject.name)
+                console.log(this.address)
+            },
+
+            async updateGeo(word) {
+                this.geo = word
+                console.log(`update geo ${this.geo}`)
+            },
+
             async loadBasket() {
                 this.loading = true
                 try {

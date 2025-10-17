@@ -12,6 +12,8 @@ urlpatterns = [
     path("profile",ProfileView.as_view(), name="profile" ),
 
     path("about", TemplateView.as_view(template_name='main/about.html'), name="about"),
+
+    path("order", TemplateView.as_view(template_name='basket/order.html'), name="order"),
 ]
 
 

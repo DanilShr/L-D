@@ -506,6 +506,9 @@ img.main-item:hover {
     transform: translateY(-2px);
 }
 
+
+
+
 .service {
     padding: 30px;
     flex: 1;
@@ -1148,6 +1151,16 @@ h2 {
     flex-direction: column;
     align-items: flex-end;
 }
+
+
+.fix-container-4 {
+    margin-right: auto;
+    margin-left: auto;
+    width: 1000px;
+    color: white;
+}
+
+
 
 /* Адаптивность для планшетов (768px - 1024px) */
 @media (max-width: 1024px) {
