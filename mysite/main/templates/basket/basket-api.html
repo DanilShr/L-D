@@ -36,14 +36,14 @@
                         <div class="basket-counter" v-text="totalCount"></div>
                         <h5>Итого: {{ totalCount }} {{ totalCountText}}</h5>
                         <h5>Общая стоимость: {{ totalPrice }} ₽</h5>
-                        <button class="btn btn-primary btn-lg">Перейти к оформлению</button>
+
                     </div>
                 </div>
-
                 <div v-else>
                     <h2>Товаров в корзине нет</h2>
                 </div>
             {% endverbatim %}
+            <a href="{% url 'order' %}" class="btn btn-primary btn-lg">Перейти к оформлению</a>
         </div>
     </section>
 {% endblock %}

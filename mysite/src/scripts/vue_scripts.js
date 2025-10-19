@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 api: 'aad9b4e7-a06a-4ada-a44b-399f65afc8dc',
                 geo: '',
                 address: [],
+                words: []
             }
         },
         computed: {
@@ -43,8 +44,19 @@ document.addEventListener('DOMContentLoaded', function() {
             },
 
             async updateGeo(word) {
-                this.geo = word
-                console.log(`update geo ${this.geo}`)
+
+                if (this.words.length < 1) {
+                    this.words.push(word);
+                    console.log(`update ${this.words} `)
+                } else {
+                    if (word.includes(this.words[this.words.length])) {
+                        this.words[this.words.length - 1] = word
+                    }
+                    else {
+                        this.words.push(word)
+                    }
+                }
+                this.geo = this.words.join(' ');
             },
 
             async loadBasket() {
