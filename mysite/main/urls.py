@@ -13,7 +13,7 @@ urlpatterns = [
 
     path("about", TemplateView.as_view(template_name='main/about.html'), name="about"),
 
-    path("order", TemplateView.as_view(template_name='basket/order.html'), name="order"),
+
 ]
 
 

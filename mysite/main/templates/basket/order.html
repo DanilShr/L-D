@@ -8,19 +8,42 @@
 {% block first_section %}
     <section class="section">
     <div class="fix-container-4">
+        <h1>Заказ</h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Наименование</th>
+                    <th>Количество</th>
+                    <th>Стоимость</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for basket in baskets %}
+                <tr>
+                    <td>{{ basket.product.name }}</td>
+                    <td>{{ basket.count }}</td>
+                    <td>{{ basket.price }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% verbatim %}
+        <h5>Общая стоимость: {{ totalPrice }} ₽</h5>
+        {% endverbatim %}
+
         <h1>Доставка</h1>
         <div class="mb-3">
           <label for="exampleFormControlInput2" class="form-label">ФИО</label>
-          <input type="email" class="form-control" id="exampleFormControlInput2" placeholder="name@example.com">
+          <input type="email" class="form-control" id="exampleFormControlInput2" placeholder="name@example.com" value="{{ profile.user.username }}">
         </div>
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label">Адрес электронной почты</label>
-          <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+          <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" value="{{ profile.email }}">
             <div class="form-text">Укажите почту на которую будет сформирован заказ</div>
         </div>
         <div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" >
               <label class="form-check-label" for="flexRadioDefault1">
                 Самовывоз
               </label>
@@ -60,10 +83,7 @@
             </div>
         </div>
         {% endverbatim %}
-        <div style="width: 500px; height: 400px;">
-            <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor:%3A053bd947d462cc1a45aeba4070defff75501905071c0eaf68436ac9976ec698c&amp;width=602&amp;height=400&amp;lang=ru_RU&amp;scroll=true&amp">
-            </script>
-        </div>
+        <div id="yandex-map" style="width: 100%; height: 400px;"></div>
         <div class="section-payment">
             <h1>Выбор способа оплаты</h1>
             <div class="payment">

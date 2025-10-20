@@ -2,7 +2,7 @@
     font-family: 'Roboto', sans-serif;
 }
 .fix-container {
-    max-width: 1000px;
+    max-width: 1200px;
     height: 100%;
     min-width: 200px;
     margin-left: auto;
@@ -15,7 +15,7 @@
     grid-template-columns: 2fr;
     grid-template-rows: 415px 322px 55px;
     color: white;
-    max-width: 1000px;
+    max-width: 1200px;
     height: 1000px;
     min-width: 200px;
     margin-left: auto;
@@ -66,7 +66,7 @@ header > div {
 
 .carousel-div {
     height: 600px;
-    width: 1000px;
+    width: 1200px;
 }
 
 .carousel slide {
@@ -77,9 +77,10 @@ header > div {
     display: flex;
     padding: 20px;
     flex-direction: row;
-background: #33283d;
-background: radial-gradient(circle, rgba(51, 40, 61, 1) 0%, rgba(41, 33, 51, 1) 33%, rgba(35, 35, 35, 1) 100%);
+    background: #33283d;
+    background: radial-gradient(circle, rgba(51, 40, 61, 1) 0%, rgba(41, 33, 51, 1) 33%, rgba(35, 35, 35, 1) 100%);
     column-gap: 34px;
+    justify-content: center;
 }
 
 
@@ -97,6 +98,15 @@ background: radial-gradient(circle, rgba(51, 40, 61, 1) 0%, rgba(41, 33, 51, 1) 
 .menu > a:hover::after {
     width: 100%;
 }
+
+.video {
+    width: 1200px;
+    height: 350px;
+    object-fit: cover;
+    object-position: center 51%;
+
+}
+
 .logo-name > p {
     color: white;
     margin: 3px;
@@ -121,24 +131,24 @@ background: radial-gradient(circle, rgba(51, 40, 61, 1) 0%, rgba(41, 33, 51, 1) 
 section {
     background-color: #232323;
     padding: 0px 20px;
-    min-height: 100vh;
-    padding-top: 50px;
+    min-height: 80vh;
 }
 .first-block > div {
     color: white;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: flex-start;
 }
 .info {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 360px;
-    width: 400px;
-    margin-right: 40px;
-    font-size: small;
+    height: 420px;
+    width: 600px;
+    /* margin-right: 40px; */
+    font-size: medium;
+    padding: 50px;
 }
 .info > h1 {
     margin-bottom: 20px;
@@ -150,8 +160,8 @@ section {
 }
 
 .fix-container img {
-    height: 360px;
-    width: 500px;
+    height: 420px;
+    width: 600px;
 }
 
 .logo {
@@ -198,9 +208,6 @@ section {
 }
 
 
-.main_img img {
-    border-radius: 10px;
-}
 footer {
     background-color: #222020;
     height: 100px;
@@ -578,7 +585,7 @@ img.main-item:hover {
     display: flex;
     justify-content: space-between;
     padding-top: 50px;
-    max-width: 1000px;
+    max-width: 1200px;
     min-height: 860px;
     min-width: 200px;
     margin-left: auto;
@@ -1032,7 +1039,7 @@ h2 {
     margin-left: auto;
     margin-right: auto;
     height: 100%;
-    width: 1000px;
+    width: 1200px;
     color: white;
 }
 
@@ -1155,7 +1162,7 @@ h2 {
 .fix-container-4 {
     margin-right: auto;
     margin-left: auto;
-    width: 1000px;
+    width: 1200px;
     color: white;
     display: flex;
     flex-direction: column;
@@ -1209,6 +1216,13 @@ h2 {
 .section-payment {
     border-top: solid 2px #dfdfdf;
     padding-top: 20px;
+}
+
+.table-hover {
+    --bs-table-bg: #373737;
+    --bs-table-color: #dad6d6;
+    --bs-table-border-color: #4e4e50;
+
 }
 
 

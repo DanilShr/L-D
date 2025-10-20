@@ -10,7 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 api: 'aad9b4e7-a06a-4ada-a44b-399f65afc8dc',
                 geo: '',
                 address: [],
-                words: []
+                map: null, // Добавляем для хранения объекта карты
+                mapInitialized: false, // Флаг инициализации карты
+                coordinates: [55.755864, 37.617698], // Координаты по умолчанию (Москва)
+                zoom: 10
             }
         },
         computed: {
@@ -42,21 +45,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.address = features.map(f => f.GeoObject.name)
                 console.log(this.address)
             },
+            async initYandexMapV3() {
+                // Для v3 используем ymaps3.ready
+                await ymaps3.ready;
+
+                // Создаем карту
+                this.map = new ymaps3.YMap(document.getElementById('yandex-map'), {
+                    location: {
+                        center: this.coordinates,
+                        zoom: this.zoom
+                    }
+                });
+
+                // Добавляем метку
+                const marker = new ymaps3.YMapMarker({
+                    coordinates: this.coordinates,
+                    title: 'Наш магазин'
+                });
+
+                this.map.addChild(marker);
+                console.log('Карта Яндекс v3 успешно создана!');
+            },
 
             async updateGeo(word) {
-
-                if (this.words.length < 1) {
-                    this.words.push(word);
-                    console.log(`update ${this.words} `)
-                } else {
-                    if (word.includes(this.words[this.words.length])) {
-                        this.words[this.words.length - 1] = word
-                    }
-                    else {
-                        this.words.push(word)
-                    }
-                }
-                this.geo = this.words.join(' ');
+                this.geo = word
             },
 
             async loadBasket() {
@@ -190,6 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         mounted() {
             this.loadBasket();
+            this.initYandexMapV3();
         }
     }).mount('#basket-app');
 })

@@ -1,3 +1,5 @@
+from urllib import request
+
 from django.shortcuts import render, redirect
 from django.views import View
 from rest_framework import status
@@ -6,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from basket.serializers import BasketSerializer
-from main.models import Basket, Product
+from main.models import Basket, Product, Profile
 
 
 # Create your views here.
@@ -96,6 +98,16 @@ class BasketApiView(ModelViewSet):
             return Response(BasketSerializer(basket).data, status=status.HTTP_200_OK)
 
 
+class OrderView(View):
+    def get(self, request):
+        user = request.user
+        baskets = Basket.objects.select_related('product').filter(user=user)
+        profile = Profile.objects.select_related('user').get(user=user)
+        context = {
+            'baskets': baskets,
+            'profile': profile,
+        }
+        return render(request, 'basket/order.html', context)
 
 
 
