@@ -45,28 +45,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.address = features.map(f => f.GeoObject.name)
                 console.log(this.address)
             },
-            async initYandexMapV3() {
-                // Для v3 используем ymaps3.ready
-                await ymaps3.ready;
-
-                // Создаем карту
-                this.map = new ymaps3.YMap(document.getElementById('yandex-map'), {
-                    location: {
-                        center: this.coordinates,
-                        zoom: this.zoom
-                    }
-                });
-
-                // Добавляем метку
-                const marker = new ymaps3.YMapMarker({
-                    coordinates: this.coordinates,
-                    title: 'Наш магазин'
-                });
-
-                this.map.addChild(marker);
-                console.log('Карта Яндекс v3 успешно создана!');
-            },
-
             async updateGeo(word) {
                 this.geo = word
             },
@@ -202,7 +180,6 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         mounted() {
             this.loadBasket();
-            this.initYandexMapV3();
         }
     }).mount('#basket-app');
 })
