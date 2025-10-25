@@ -52,6 +52,7 @@ class Orders(models.Model):
     status = models.CharField(max_length=100, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     delivery = models.CharField(max_length=100, blank=True)
+    payment = models.CharField(max_length=100, blank=True)
 
 
 class OrderItem(models.Model):

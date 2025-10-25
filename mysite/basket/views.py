@@ -3,12 +3,11 @@ from urllib import request
 from django.shortcuts import render, redirect
 from django.views import View
 from rest_framework import status
-from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from basket.serializers import BasketSerializer
-from main.models import Basket, Product, Profile
+from main.models import Basket, Product, Profile, Orders, OrderItem
 
 
 # Create your views here.
@@ -108,6 +107,24 @@ class OrderView(View):
             'profile': profile,
         }
         return render(request, 'basket/order.html', context)
+
+    def post(self, request):
+        payment = request.POST.get('payment')
+        delivery = request.POST.get('delivery')
+        user = request.user
+        profile = Profile.objects.get(user=user)
+        try:
+            order = Orders.objects.create(customer=profile, status='В ожидании оплаты', payment=payment, delivery=delivery)
+            baskets = Basket.objects.select_related('product').filter(user=user).defer('id', 'user')
+            for basket in baskets:
+                OrderItem.objects.create(order=order, product_name=basket.product, count=basket.count, price=basket.price)
+            baskets.delete()
+        except Exception as e:
+            print(f"Ошибка создания заказа {e}")
+
+        return redirect('orders')
+
+
 
 
 
