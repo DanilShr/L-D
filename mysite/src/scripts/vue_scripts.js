@@ -13,7 +13,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 map: null, // Добавляем для хранения объекта карты
                 mapInitialized: false, // Флаг инициализации карты
                 coordinates: [55.755864, 37.617698], // Координаты по умолчанию (Москва)
-                zoom: 10
+                zoom: 10,
+                deliveryType: '',
+                deliveryService: '',
+                showDropdown: false
             }
         },
         computed: {
@@ -180,6 +183,12 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         mounted() {
             this.loadBasket();
+            document.addEventListener('click', (e) => {
+                const input = this.$refs.addressInput;
+                if (input && !input.contains(e.target)) {
+                    this.showDropdown = false;
+                }
+            });
         }
     }).mount('#basket-app');
 })

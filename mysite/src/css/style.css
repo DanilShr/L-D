@@ -800,7 +800,7 @@ img.main-item:hover {
 
 h2 {
     margin: 0 0 20px 0;
-    text-align: center;
+    text-align: left;
     color: #fff;
 }
 
@@ -1169,11 +1169,17 @@ h2 {
 .fix-container-4 {
     margin-right: auto;
     margin-left: auto;
-    width: 1200px;
+    width: 800px;
     color: white;
     display: flex;
     flex-direction: column;
     gap: 10px
+}
+
+.customers {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 
@@ -1182,7 +1188,7 @@ h2 {
     padding: 20px 0px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 20px
 }
 
@@ -1218,16 +1224,39 @@ h2 {
     border-color: #007bff;
 }
 
+.order-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+.order-item {
+    min-height: 70px;
+}
 .payment-button:hover {
     background-color: #f5f5f5;
 }
+
+.payment-end {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 40px;
+}
+
 .section-delivery {
-    border-top: solid 2px #dfdfdf;
-    padding-top: 20px;
+    padding: 20px;
+    background: #3b3a3a40;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .section-payment {
-    border-top: solid 2px #dfdfdf;
-    padding-top: 20px;
+    padding: 20px;
+    background: #3b3a3a40;
+    border-radius: 10px;
 }
 
 .table-hover {
@@ -1236,6 +1265,8 @@ h2 {
     --bs-table-border-color: #4e4e50;
 
 }
+
+
 
 
 /* Адаптивность для планшетов (768px - 1024px) */

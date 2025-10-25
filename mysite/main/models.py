@@ -51,7 +51,6 @@ class Orders(models.Model):
     customer = models.ForeignKey(Profile, on_delete=models.CASCADE)
     status = models.CharField(max_length=100, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    delivery = models.CharField(max_length=100, blank=True)
     payment = models.CharField(max_length=100, blank=True)
 
 
@@ -61,6 +60,11 @@ class OrderItem(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     count = models.IntegerField()
 
+class Delivery(models.Model):
+    order = models.ForeignKey(Orders, on_delete=models.CASCADE)
+    type = models.CharField(max_length=100, blank=True)
+    address = models.CharField(max_length=255)
+    country = models.CharField(max_length=255)
 
 
 

@@ -8,10 +8,14 @@ from rest_framework.viewsets import ModelViewSet
 
 from basket.serializers import BasketSerializer
 from main.models import Basket, Product, Profile, Orders, OrderItem
+import uuid
 
+from yookassa import Configuration, Payment
 
 # Create your views here.
 
+Configuration.account_id = 'e21e12wdwd'
+Configuration.secret_key = '12321312edwd0j9n1298dh98n12dsun98'
 
 class BasketView(View):
     def get(self, request):
@@ -109,12 +113,12 @@ class OrderView(View):
         return render(request, 'basket/order.html', context)
 
     def post(self, request):
-        payment = request.POST.get('payment')
+        payment_type = request.POST.get('payment')
         delivery = request.POST.get('delivery')
         user = request.user
         profile = Profile.objects.get(user=user)
         try:
-            order = Orders.objects.create(customer=profile, status='В ожидании оплаты', payment=payment, delivery=delivery)
+            order = Orders.objects.create(customer=profile, status='В ожидании оплаты', payment=payment_type, delivery=delivery)
             baskets = Basket.objects.select_related('product').filter(user=user).defer('id', 'user')
             for basket in baskets:
                 OrderItem.objects.create(order=order, product_name=basket.product, count=basket.count, price=basket.price)
@@ -122,7 +126,19 @@ class OrderView(View):
         except Exception as e:
             print(f"Ошибка создания заказа {e}")
 
-        return redirect('orders')
+        payment = Payment.create({
+            "amount": {
+                "value": "100.00",
+                "currency": "RUB"
+            },
+            "confirmation": {
+                "type": "redirect",
+                "return_url": "http://localhost:8000/orders",
+            },
+            "capture": True,
+            "description": "Заказ №1"
+        }, uuid.uuid4())
+        return redirect(payment.confirmation.confirmation_url)
 
 
 

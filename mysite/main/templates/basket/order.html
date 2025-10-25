@@ -8,122 +8,139 @@
 {% block first_section %}
     <section class="section">
     <div class="fix-container-4">
-        <h1>Заказ</h1>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Наименование</th>
-                    <th>Количество</th>
-                    <th>Стоимость</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for basket in baskets %}
-                <tr>
-                    <td>{{ basket.product.name }}</td>
-                    <td>{{ basket.count }}</td>
-                    <td>{{ basket.price }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-        <div class="section-delivery">
+            <h1>Заказ</h1>
+            <div class="order-items">
+                {% for basket in baskets %}
+                <div class="order-item d-flex align-items-center gap-3 p-2 border-bottom">
+                    <img src="{{ basket.product.image.url }}" class="order-image" alt="{{ basket.product.name }}">
+                    <div class="flex-grow-1">
+                        <div class="fw-bold">{{ basket.product.name }}</div>
+                    </div>
+                    <div class="text-nowrap">×{{ basket.count }}</div>
+                    <div class="text-nowrap fw-bold">{{ basket.price }} ₽</div>
+                </div>
+                {% endfor %}
+            </div>
+        <form method="post">
+            {% csrf_token %}
             <h2>Доставка</h2>
-            <div class="mb-3">
-              <label for="exampleFormControlInput2" class="form-label">ФИО</label>
-              <input type="email" class="form-control" id="exampleFormControlInput2" placeholder="name@example.com" value="{{ profile.user.username }}">
-            </div>
-            <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">Адрес электронной почты</label>
-              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" value="{{ profile.email }}">
-                <div class="form-text">Укажите почту на которую будет сформирован заказ</div>
-            </div>
-            <div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" >
-                  <label class="form-check-label" for="flexRadioDefault1">
-                    Самовывоз
-                  </label>
+            <div class="section-delivery">
+
+                <div class="customers">
+                    <div class="mb-3" style="width: 48%">
+                      <label for="exampleFormControlInput4" class="form-label">ФИО</label>
+                      <input  class="form-control" id="exampleFormControlInput4" name="username" placeholder="name@example.com" value={{user.username}}>
+                    </div>
+                    <div class="mb-3" style="width: 48%">
+                      <label for="exampleFormControlInput6" class="form-label">Адрес электронной почты</label>
+                      <input  class="form-control" id="exampleFormControlInput6" name="email" placeholder="name@example.com" value="{{user.profile.email}}">
+                        <div class="form-text">Укажите почту на которую будет сформирован заказ</div>
+                    </div>
                 </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                  <label class="form-check-label" for="flexRadioDefault2">
-                    Доставка в пределах города
-                  </label>
+                <div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" v-model="deliveryType" name="delivery" value="Самовывоз" id="flexRadioDefault1" checked>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Самовывоз
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" v-model="deliveryType"  name="delivery" value="По адресу" id="flexRadioDefault2">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Доставка в пределах города
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" v-model="deliveryType" name="deliveryT" value="region" id="flexRadioDefault3">
+                        <label class="form-check-label" for="flexRadioDefault3">
+                            Доставка в регионы
+                        </label>
+                    </div>
                 </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" checked>
-                  <label class="form-check-label" for="flexRadioDefault3">
-                    Доставка в регионы
-                  </label>
+
+                <!-- Блок для выбора службы доставки -->
+                <div v-if="deliveryType === 'region'">
+                    <div class="payment">
+                        <label class="payment-option">
+                            <input type="radio" name="delivery" value="Почта России">
+                            <div class="payment-button">
+                                <img src="{% static 'delivery/pochta.svg' %}">
+                            </div>
+                             <span>Почта России</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="delivery" value="СДЭК">
+                            <div class="payment-button">
+                                <img src="{% static 'delivery/cdek.svg' %}">
+                            </div>
+                             <span>СДЭК</span>
+                        </label>
+                    </div>
+                    {% verbatim %}
+                    <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label1">Город</label>
+                        <input placeholder="Введите город" name="country" class="form-control">
+                    </div>
+                    <div class="mb-3" v-click-outside="hideDropdown">
+                      <label for="exampleFormControlInput1" class="form-label">Адрес доставки</label>
+                       <input
+                          ref="addressInput"
+                          v-model="geo"
+                          @input="geoDecode"
+                          @focus="showDropdown = true"
+                          class="form-control"
+                          placeholder="Введите адрес"
+                          name="address"
+                        >
+                        <div v-if="showDropdown && address.length" class="list-group">
+                          <div
+                            v-for="(add, index) in address"
+                            :key="index"
+                            @click="updateGeo(add)"
+                             class="list-group-item list-group-item-action-dark"
+                          >
+                            {{ add }}
+                          </div>
+                        </div>
+                    </div>
+                    {% endverbatim %}
                 </div>
             </div>
-    {% verbatim %}
-            <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">Адрес доставки</label>
-               <input
-                  v-model="geo"
-                  @input="geoDecode"
-                  @focus="showDropdown = true"
-                  class="form-control"
-                  placeholder="Введите адрес"
-                >
-                <div v-if="showDropdown && address.length" class="dropdown-item">
-                  <div
-                    v-for="(add, index) in address"
-                    :key="index"
-                    @click="updateGeo(add)"
-                    class="dropdown-item clickable-item"
-                  >
-                    {{ add }}
-                  </div>
-                </div>
-            </div>
-            {% endverbatim %}
-            <div id="yandex-map" style="width: 100%; height: 400px;"></div>
-        </div>
-        <div class="section-payment">
-            <form method="post">
-                    {% csrf_token %}
             <h2>Выбор способа оплаты</h2>
-            <div class="payment">
-             <label class="payment-option">
-                    <input type="radio" name="payment" value="sbp" checked>
-                    <div class="payment-button">
-                        <img src="{% static 'sbp-logo.svg' %}">
-                    </div>
-                    <span>СБП</span>
-                </label>
+            <div class="section-payment">
+                <div class="payment">
+                 <label class="payment-option">
+                        <input type="radio" name="payment" value="sbp" checked>
+                        <div class="payment-button">
+                            <img src="{% static 'sbp-logo.svg' %}">
+                        </div>
+                        <span>СБП</span>
+                    </label>
 
-                <label class="payment-option">
-                    <input type="radio" name="payment" value="card">
-                    <div class="payment-button">
-                        <img src="{% static 'card-logo.svg' %}">
-                    </div>
-                     <span>Банковская карта</span>
-                </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="card">
+                        <div class="payment-button">
+                            <img src="{% static 'card-logo.svg' %}">
+                        </div>
+                         <span>Банковская карта</span>
+                    </label>
 
-                <label class="payment-option">
-                    <input type="radio" name="payment" value="yoomoney">
-                    <div class="payment-button">
-                        <img src="{% static 'dollar-money-svgrepo-com.svg' %}">
-                    </div>
-                    <span>При получении</span>
-                </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="yoomoney">
+                        <div class="payment-button">
+                            <img src="{% static 'dollar-money-svgrepo-com.svg' %}">
+                        </div>
+                        <span>При получении</span>
+                    </label>
+                </div>
             </div>
-            <div>
+            <div class="payment-end">
                 {% verbatim %}
-                <h5>Общая стоимость: {{ totalPrice }} ₽</h5>
+                <h4>Общая стоимость: {{ totalPrice }} ₽</h4>
                 {% endverbatim %}
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 200px">Оформить заказ</button>
             </div>
-            <div style="padding: 20px 0px">
-
-                    <button type="submit" class="btn btn-primary" >Потвердить выбор</button>
-
-            </div>
-            </form>
-        </div>
+       </form>
     </div>
     </section>
 {% endblock %}
