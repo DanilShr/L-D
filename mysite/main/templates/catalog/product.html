@@ -12,7 +12,9 @@
                     <div>{{ product.description|default:"Нет описания" }}</div>
                     <div class="pay-product">
                         <div>Цена: {{ product.price }}</div>
-                        <button class="product-btn" style="width: 150px; margin-top: 15px">В корзину</button>
+                        <button class="product-btn"
+                        data-product-id="{{ product.id }}"
+                        @click="addBasketNew($event)">В корзину</button>
                     </div>
                 </div>
 

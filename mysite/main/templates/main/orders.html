@@ -1,35 +1,68 @@
 {% extends "main/index.html" %}
 {% load static %}
 {% block first_section %}
-    <section class="order-block">
-    {% for order in orders %}
-        <div class="order-info">
-            <div class="about">
-                <div style="font-size: medium">Заказ #{{ order.id }}</div>
-                <div>Время заказа {{ order.created_at }}</div>
+<section class="order-block">
+    {% if orders %}
+        {% for order in orders %}
+            <div class="order-view">
+                <div class="order-view-inner">
+                    <div class="order-info">
+                        <p class="order-number">Заказ №{{ order.id }}</p>
+                        <p class="order-date">{{ order.created_at|date:"d.m.Y H:i" }}</p>
+                    </div>
+                    <div class="order-summary">
+                        <p class="order-total">Итого: <strong>{{ order.total }} ₽</strong></p>
+                        <p class="order-status">Статус: <span class="status-badge">{{ order.status }}</span></p>
+                    </div>
+                </div>
+
+                <div class="accordion accordion-flush" id="accordionFlush-{{ order.id }}">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-{{ order.id }}" aria-expanded="false" aria-controls="flush-collapse-{{ order.id }}">
+                        📦 Детали заказа
+                      </button>
+                    </h2>
+                    <div id="flush-collapse-{{ order.id }}" class="accordion-collapse collapse" data-bs-parent="#accordionFlush-{{ order.id }}">
+                        <div class="accordion-body">
+                            <div class="order-items">
+                                {% for item in order.orderitem_set.all %}
+                                <div class="order-item d-flex align-items-center gap-3 p-3">
+                                    <img src="{{ item.product.image.url }}" class="order-image rounded" alt="{{ item.product.name }}">
+                                    <div class="flex-grow-1">
+                                        <div class="fw-bold mb-1">{{ item.product.name }}</div>
+                                        <small class="text-muted">Количество: {{ item.count }}</small>
+                                    </div>
+                                    <div class="text-nowrap fw-bold">{{ item.price }} ₽</div>
+                                </div>
+                                {% if not forloop.last %}<hr class="my-2">{% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="payment-info mt-3 p-3 bg-dark rounded">
+                                <strong>Способ оплаты:</strong> {{ order.payment }}
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+                {% if order.status == 'В ожидании оплаты' %}
+                    <div class="payment-actions">
+                        <button class="btn btn-success btn-sm" style="width: 120px">Оплатить</button>
+                    </div>
+                {% elif order.status == 'Отправлен' %}
+                    <div class="payment-actions">
+                        <button class="btn btn-outline-light btn-sm" style="width: 120px">Отследить</button>
+                    </div>
+                {% endif %}
             </div>
-            <div class="orders">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Услуга</th>
-                            <th>Пользователь</th>
-                            <th>Статус</th>
-                            <th>Детали</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{ order.service }}</td>
-                            <td>{{ order.customer }}</td>
-                            <td>{{ order.status }}</td>
-                            <td><a href="#">Подробнее</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty-orders text-center py-5">
+            <h3 class="text-muted">Заказов пока нет</h3>
+            <p class="text-muted">Начните покупки, чтобы увидеть здесь свои заказы</p>
         </div>
-    {% endfor %}
-    </section>
+    {% endif %}
+</section>
 
 {% endblock %}

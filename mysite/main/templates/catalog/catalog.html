@@ -1,79 +1,31 @@
 {% extends 'main/index.html' %}
 
 {% block first_section %}
-<section>
-    <div class="catalog">
-        <div class="filters">
-            <div class="block-filters">
-                <!-- Фильтр по цене -->
-                <div class="filter-group">
-                    <label for="priceRange" class="form-label">Цена, руб</label>
-                    <input type="range" class="form-range" min="0" max="10000" value="5000" id="priceRange">
-                    <div class="price-values">
-                        <span>0</span>
-                        <span id="currentPrice">5000</span>
-                        <span>10000</span>
+    <section>
+        <div class="catalog">
+        {% include "catalog/filters.html" %}
+            <div id="app"  class="catalog-block">
+                {% for products in page_obj  %}
+                <div class="fix-container3">
+                    {% for product in products %}
+                    <div v='loading' class="product">
+                        <div class="product-image">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        </div>
+                        <div class="product-name"><a href="{% url "product-detail" pk=product.id %}">{{ product.name }}</a></div>
+                        <div class="product-description">{{ product.description}}</div>
+                        <div class="product-price">{{ product.price }} руб</div>
+                        <div class="product-actions">
+                            <button class="product-btn"
+                            data-product-id="{{ product.id }}"
+                            @click="addBasketNew($event)">В корзину</button>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Фильтр по категориям -->
-                <div class="filter-group">
-                    <label class="form-label">Категория</label>
-                    <div class="checkbox-group">
-                        <label><input type="checkbox" name="category"> Готовая фигурка</label>
-                        <label><input type="checkbox" name="category"> Под покраску</label>
-                        <label><input type="checkbox" name="category"> Под заказ</label>
-
-                    </div>
-                </div>
-
-                <div class="filter-group">
-                    <label class="form-label">Пластик</label>
-                    <div class="checkbox-group">
-                        <label><input type="checkbox" name="brand"> PLA</label>
-                        <label><input type="checkbox" name="brand"> PETG</label>
-                        <label><input type="checkbox" name="brand"> ABS</label>
-                    </div>
-                </div>
-
-                <!-- Фильтр по рейтингу -->
-                <div class="filter-group">
-                    <label class="form-label">Рейтинг</label>
-                    <div class="checkbox-group">
-                        <label><input type="checkbox" name="rating"> ★★★★★</label>
-                        <label><input type="checkbox" name="rating"> ★★★★☆ и выше</label>
-                        <label><input type="checkbox" name="rating"> ★★★☆☆ и выше</label>
-                    </div>
-                </div>
-
-                <!-- Кнопки фильтрации -->
-                <div class="filter-buttons">
-                    <button type="button" class="apply-btn">Применить</button>
-                    <button type="button" class="reset-btn">Сбросить</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="catalog-block">
-            {% for products in product_list %}
-            <div class="fix-container3">
-                {% for product in products %}
-                <div class="product">
-                    <div class="product-image">
-                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                    </div>
-                    <div class="product-name"><a href="{% url "product-detail" pk=product.id %}">{{ product.name }}</a></div>
-                    <div class="product-description">{{ product.description}}</div>
-                    <div class="product-price">{{ product.price }} руб</div>
-                    <div class="product-actions">
-                        <a href="#" type="button" class="product-btn">В корзину</a>
-                    </div>
+                    {% endfor %}
                 </div>
                 {% endfor %}
             </div>
-            {% endfor %}
         </div>
-    </div>
-    <div class="paginator-block">{% include "main/pagination.html" %}</div>
-</section>
+        <div class="paginator-block">{% include "main/pagination.html" %}</div>
+    </section>
 {% endblock %}

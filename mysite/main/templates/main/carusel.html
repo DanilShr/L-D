@@ -1,0 +1,55 @@
+{% load static %}
+<section class="carousel">
+        <h1 style="font-weight: bold; margin-top: 60px">Наши работы</h1>
+        <div class="carousel-div">
+            <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" style="padding: 20px">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="carousel-div-item">
+                        <div>
+                            <img class="carousel_img" src="{% static 'work/stand.jpg' %}">
+                        </div>
+                        <div class="carousel-info">
+                            <h3>Стэнд для наушников</h3>
+                            <p>Стильный и надежный стэнд для наушников, напечатанный на 3D-принтере из экологичного PLA-пластика.
+                                Аккуратно храните ваши наушники и украсьте рабочее пространство</p>
+                            <button type="button" class="btn btn-secondary">Подробнее</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item active">
+                    <div class="carousel-div-item">
+                        <div>
+                            <img class="carousel_img" src="{% static 'work/godzilla.jpg' %}">
+                        </div>
+                        <div class="carousel-info">
+                            <h3>Godzilla</h3>
+                            <p>Грозный король монстров, воплощенный с помощью 3D-печати! Дизайнерская фигурка из экологичного PLA-пластика станет мощным акцентом в вашей коллекции</p>
+                            <button type="button" class="btn btn-secondary">Подробнее</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item active">
+                    <div class="carousel-div-item">
+                        <div>
+                            <img class="carousel_img" src="{% static 'work/witcher.jpg' %}">
+                        </div>
+                        <div class="carousel-info">
+                            <h3>Wither</h3>
+                            <p>Грозный король монстров, воплощенный с помощью 3D-печати! Дизайнерская фигурка из экологичного PLA-пластика станет мощным акцентом в вашей коллекции</p>
+                            <button type="button" class="btn btn-secondary">Подробнее</button>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+        </div>
+    </section>

@@ -28,19 +28,6 @@ class Product(models.Model):
 def __str__(self):
         return self.name
 
-class Orders(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    service = models.CharField(max_length=100, blank=True)
-    status = models.CharField(max_length=100, blank=True)
-    customer = models.CharField(max_length=100, blank=True)
-    phone = models.CharField(max_length=100, blank=True)
-    email = models.EmailField(max_length=100, blank=True)
-    painting = models.CharField(max_length=100, blank=True)
-    plastic = models.CharField(max_length=100, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    color = models.CharField(max_length=100, blank=True)
-    delivery = models.CharField(max_length=100, blank=True)
-    file = models.FileField(upload_to="Model/", blank=True, null=True)
 
 
 def avatar_dir(instance, filename):
@@ -51,6 +38,36 @@ class Profile(models.Model):
     avatar = models.ImageField(upload_to=avatar_dir, blank=True, null=True)
     phone = models.CharField(max_length=100, blank=True)
     email = models.EmailField(max_length=100, blank=True)
+
+
+class Basket(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    count = models.IntegerField(default=0)
+
+
+class Orders(models.Model):
+    customer = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    status = models.CharField(max_length=100, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    payment = models.CharField(max_length=100, blank=True)
+    total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Orders, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    count = models.IntegerField()
+
+class Delivery(models.Model):
+    order = models.ForeignKey(Orders, on_delete=models.CASCADE)
+    type = models.CharField(max_length=100, blank=True)
+    address = models.CharField(max_length=255)
+    country = models.CharField(max_length=255)
+
 
 
 

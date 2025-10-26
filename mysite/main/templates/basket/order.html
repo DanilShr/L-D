@@ -1,0 +1,181 @@
+{% extends 'main/index.html' %}
+{% load static %}
+
+{% block title %}
+    Заказ
+{% endblock %}
+
+{% block first_section %}
+    <section class="section">
+    <div class="fix-container-4">
+            <h2>Детали заказа</h2>
+            <div class="order-items">
+                {% for basket in baskets %}
+                <div class="order-item d-flex align-items-center gap-3 p-2 border-bottom">
+                    <img src="{{ basket.product.image.url }}" class="order-image" alt="{{ basket.product.name }}">
+                    <div class="flex-grow-1">
+                        <div class="fw-bold">{{ basket.product.name }}</div>
+                    </div>
+                    <div class="text-nowrap">×{{ basket.count }}</div>
+                    <div class="text-nowrap fw-bold">{{ basket.price }} ₽</div>
+                </div>
+                {% endfor %}
+            </div>
+        <form method="post">
+            {% csrf_token %}
+            <h2>Доставка</h2>
+            <div class="section-delivery">
+                <div class="customers">
+                    <div style="width: 48%">
+                        <div class="mb-3">
+                          <label for="exampleFormControlInput4" class="form-label">ФИО</label>
+                          <input  class="form-control" id="exampleFormControlInput4" name="username" placeholder="name@example.com" value={{user.username}}>
+                        </div>
+                        <div class="mb-3" >
+                          <label for="exampleFormControlInput6" class="form-label">Адрес электронной почты</label>
+                          <input  class="form-control" id="exampleFormControlInput6" name="email" placeholder="name@example.com" value="{{user.profile.email}}" required>
+                        </div>
+                        <div class="mb-3" >
+                          <label for="exampleFormControlInput6" class="form-label">Номер телефона</label>
+                          <input class="form-control" id="exampleFormControlInput6" name="phone" value="{{user.profile.phone}}" required>
+                            <div class="form-text">Укажите номер телефона для формирования заказа</div>
+                        </div>
+                    </div>
+                    <div style="width: 48%">
+                        <img src="{% static 'доставка.jpeg'%}" style="width: 90%; height: 100%; border-radius: 20px">
+                    </div>
+                </div>
+                <div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" v-model="deliveryType" name="delivery" value="Самовывоз" id="flexRadioDefault1" checked>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Самовывоз
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" v-model="deliveryType"  name="deliveryT" value="local" id="flexRadioDefault2">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Доставка в пределах города
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" v-model="deliveryType" name="deliveryT" value="region" id="flexRadioDefault3">
+                        <label class="form-check-label" for="flexRadioDefault3">
+                            Доставка в регионы
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Блок для выбора службы доставки -->
+                <div v-if="deliveryType === 'region'">
+                    <div class="payment">
+                        <label class="payment-option">
+                            <input type="radio" name="delivery" value="Почта России">
+                            <div class="payment-button">
+                                <img src="{% static 'delivery/pochta.svg' %}">
+                            </div>
+                             <span>Почта России</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="delivery" value="СДЭК">
+                            <div class="payment-button">
+                                <img src="{% static 'delivery/cdek.svg' %}">
+                            </div>
+                             <span>СДЭК</span>
+                        </label>
+                    </div>
+                    {% verbatim %}
+                    <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label1">Город</label>
+                        <input placeholder="Введите город" name="country" class="form-control">
+                    </div>
+                    <div class="mb-3" v-click-outside="hideDropdown">
+                      <label for="exampleFormControlInput1" class="form-label">Адрес доставки</label>
+                       <input
+                          ref="addressInput"
+                          v-model="geo"
+                          @input="geoDecode"
+                          @focus="showDropdown = true"
+                          class="form-control"
+                          placeholder="Введите адрес"
+                          name="address"
+                        >
+                        <div v-if="showDropdown && address.length" class="list-group">
+                          <div
+                            v-for="(add, index) in address"
+                            :key="index"
+                            @click="updateGeo(add)"
+                             class="list-group-item list-group-item-action-dark"
+                          >
+                            {{ add }}
+                          </div>
+                        </div>
+                    </div>
+                    {% endverbatim %}
+                </div>
+                <div v-if="deliveryType === 'local'">
+                    {% verbatim %}
+                    <div class="mb-3" v-click-outside="hideDropdown">
+                      <label for="exampleFormControlInput1" class="form-label">Адрес доставки</label>
+                       <input
+                          ref="addressInput"
+                          v-model="geo"
+                          @input="geoDecode"
+                          @focus="showDropdown = true"
+                          class="form-control"
+                          placeholder="Введите адрес"
+                          name="address"
+                        >
+                        <div v-if="showDropdown && address.length" class="list-group">
+                          <div
+                            v-for="(add, index) in address"
+                            :key="index"
+                            @click="updateGeo(add)"
+                             class="list-group-item list-group-item-action-dark"
+                          >
+                            {{ add }}
+                          </div>
+                        </div>
+                    </div>
+                    {% endverbatim %}
+                </div>
+            </div>
+            <h2>Выбор способа оплаты</h2>
+            <div class="section-payment">
+                <div class="payment">
+                 <label class="payment-option">
+                        <input type="radio" name="payment" value="sbp" checked>
+                        <div class="payment-button">
+                            <img src="{% static 'sbp-logo.svg' %}">
+                        </div>
+                        <span>СБП</span>
+                    </label>
+
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="card">
+                        <div class="payment-button">
+                            <img src="{% static 'card-logo.svg' %}">
+                        </div>
+                         <span>Банковская карта</span>
+                    </label>
+
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="yoomoney">
+                        <div class="payment-button">
+                            <img src="{% static 'dollar-money-svgrepo-com.svg' %}">
+                        </div>
+                        <span>При получении</span>
+                    </label>
+                </div>
+            </div>
+            <div class="payment-end">
+                {% verbatim %}
+                <input name="total" :value="totalPrice" type="hidden">
+                <h4>Общая стоимость: {{ totalPrice }} ₽</h4>
+                {% endverbatim %}
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 200px">Оформить заказ</button>
+            </div>
+       </form>
+    </div>
+    </section>
+{% endblock %}

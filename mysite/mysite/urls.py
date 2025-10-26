@@ -17,6 +17,7 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.messages import api
 from django.urls import path, include
 
 urlpatterns = [
@@ -26,6 +27,8 @@ urlpatterns = [
     path("", include("auth.urls"), name="auth"),
 
     path("", include("catalog.urls"), name="catalog"),
+
+    path("", include("basket.urls"), name="basket"),
 
 ]
 
