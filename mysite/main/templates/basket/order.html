@@ -8,7 +8,7 @@
 {% block first_section %}
     <section class="section">
     <div class="fix-container-4">
-            <h1>Заказ</h1>
+            <h2>Детали заказа</h2>
             <div class="order-items">
                 {% for basket in baskets %}
                 <div class="order-item d-flex align-items-center gap-3 p-2 border-bottom">
@@ -25,16 +25,24 @@
             {% csrf_token %}
             <h2>Доставка</h2>
             <div class="section-delivery">
-
                 <div class="customers">
-                    <div class="mb-3" style="width: 48%">
-                      <label for="exampleFormControlInput4" class="form-label">ФИО</label>
-                      <input  class="form-control" id="exampleFormControlInput4" name="username" placeholder="name@example.com" value={{user.username}}>
+                    <div style="width: 48%">
+                        <div class="mb-3">
+                          <label for="exampleFormControlInput4" class="form-label">ФИО</label>
+                          <input  class="form-control" id="exampleFormControlInput4" name="username" placeholder="name@example.com" value={{user.username}}>
+                        </div>
+                        <div class="mb-3" >
+                          <label for="exampleFormControlInput6" class="form-label">Адрес электронной почты</label>
+                          <input  class="form-control" id="exampleFormControlInput6" name="email" placeholder="name@example.com" value="{{user.profile.email}}" required>
+                        </div>
+                        <div class="mb-3" >
+                          <label for="exampleFormControlInput6" class="form-label">Номер телефона</label>
+                          <input class="form-control" id="exampleFormControlInput6" name="phone" value="{{user.profile.phone}}" required>
+                            <div class="form-text">Укажите номер телефона для формирования заказа</div>
+                        </div>
                     </div>
-                    <div class="mb-3" style="width: 48%">
-                      <label for="exampleFormControlInput6" class="form-label">Адрес электронной почты</label>
-                      <input  class="form-control" id="exampleFormControlInput6" name="email" placeholder="name@example.com" value="{{user.profile.email}}">
-                        <div class="form-text">Укажите почту на которую будет сформирован заказ</div>
+                    <div style="width: 48%">
+                        <img src="{% static 'доставка.jpeg'%}" style="width: 90%; height: 100%; border-radius: 20px">
                     </div>
                 </div>
                 <div>
@@ -45,7 +53,7 @@
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" v-model="deliveryType"  name="delivery" value="По адресу" id="flexRadioDefault2">
+                        <input class="form-check-input" type="radio" v-model="deliveryType"  name="deliveryT" value="local" id="flexRadioDefault2">
                         <label class="form-check-label" for="flexRadioDefault2">
                             Доставка в пределах города
                         </label>
@@ -105,6 +113,32 @@
                     </div>
                     {% endverbatim %}
                 </div>
+                <div v-if="deliveryType === 'local'">
+                    {% verbatim %}
+                    <div class="mb-3" v-click-outside="hideDropdown">
+                      <label for="exampleFormControlInput1" class="form-label">Адрес доставки</label>
+                       <input
+                          ref="addressInput"
+                          v-model="geo"
+                          @input="geoDecode"
+                          @focus="showDropdown = true"
+                          class="form-control"
+                          placeholder="Введите адрес"
+                          name="address"
+                        >
+                        <div v-if="showDropdown && address.length" class="list-group">
+                          <div
+                            v-for="(add, index) in address"
+                            :key="index"
+                            @click="updateGeo(add)"
+                             class="list-group-item list-group-item-action-dark"
+                          >
+                            {{ add }}
+                          </div>
+                        </div>
+                    </div>
+                    {% endverbatim %}
+                </div>
             </div>
             <h2>Выбор способа оплаты</h2>
             <div class="section-payment">
@@ -136,6 +170,7 @@
             </div>
             <div class="payment-end">
                 {% verbatim %}
+                <input name="total" :value="totalPrice" type="hidden">
                 <h4>Общая стоимость: {{ totalPrice }} ₽</h4>
                 {% endverbatim %}
                 <button type="submit" class="btn btn-primary btn-lg" style="width: 200px">Оформить заказ</button>
