@@ -368,14 +368,14 @@ img.main-item:hover {
 
 .reg_block {
     color: white;
-    background: white;
     display: flex;
     justify-content: space-around;
     flex-direction: row-reverse;
     width: 1000px;
     height: 500px;
     margin: 60px auto;
-
+    border-radius: 3px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
 }
 
 .reg-form {
@@ -386,27 +386,60 @@ img.main-item:hover {
     padding: 0 40px;
     justify-content: space-around;
 }
+
+.req_info_group {
+    display: flex;
+    justify-content: space-between;
+}
+
 .req_group {
     width: 100%;
 }
 
 .button-req input{
-    width: 30%;
+    width: 80%;
 
 }
 
 .reg_link {
+    display: flex;
+    flex-direction: column;
     width: 40%;
     background: linear-gradient(45deg, rgb(78, 93, 220), rgb(67, 66, 112));
+    align-items: center;
+    justify-content: space-around;
+    padding: 20px;
 }
+
+.req_link_img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    height: 45%;
+}
+
+.req_link_img img {
+    width: 80%;
+    height: 80%;
+}
+
+
+
 .button-req {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: row;
+    padding-bottom: 30px;
 }
-.button-req input {
-    margin-top: 50px;
+
+.button_log {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 80%;
 }
+
 .reg-form label {
     margin-bottom: 10px;
 }

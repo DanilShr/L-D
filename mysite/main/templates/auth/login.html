@@ -18,7 +18,7 @@
                     {{ error }}
                 </p>
                 {% endif %}
-                <h1>Вход</h1>
+                <h1>Войдите в свой аккаунт</h1>
                 <div class="req_group">
                     <div class="mb-3">
                         <label for="username">Логин:</label>
@@ -29,19 +29,29 @@
                         <input type="password" id="password" name="password" class="reg-form__input form-control" required>
                     </div>
                 </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="checkRememberme">
-                  <label class="form-check-label" for="checkRememberme">
-                    Запомнить меня
-                  </label>
+                <div class="req_info_group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="checkRememberme">
+                      <label class="form-check-label" for="checkRememberme">
+                        Запомнить меня
+                      </label>
+                    </div>
+                    <div>
+                        <a href="#">Забыли пароль?</a>
+                    </div>
                 </div>
                 <div class="button-req">
-                    <input type="reset" class="btn btn-danger" value="Сбросить">
                     <input type="submit" class="btn btn-primary" value="Войти">
                 </div>
-
             </form>
             <div class="reg_link">
+                <div class="req_link_img"><img src="{% static 'user-person-profile-check (1).svg' %}"></div>
+                <div><p>Войти используя социальные сети</p></div>
+                <div class="button_log">
+                    <button type="button" class="btn btn-primary">Vk</button>
+
+                    <button type="button" class="btn btn-danger">Google</button>
+                </div>
             </div>
         </div>
     </div>
