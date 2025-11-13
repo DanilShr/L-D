@@ -131,7 +131,7 @@ header > div {
 section {
     background-color: #232323;
     padding: 0px 20px;
-    min-height: 80vh;
+    min-height: 90vh;
 }
 .first-block > div {
     color: white;
@@ -365,21 +365,39 @@ img.main-item:hover {
     padding: 40px;
     width: 360px;
 }
-.reg-form {
 
+.reg_block {
     color: white;
+    background: white;
     display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    border-radius: 20px;
-    padding: 30px 70px 20px 20px;
-    max-width: 1200px;
-    min-width: 600px;
-    height: 800px;
+    justify-content: space-around;
+    flex-direction: row-reverse;
+    width: 1000px;
+    height: 500px;
+    margin: 60px auto;
+
 }
 
-.reg-form > div {
-    margin-top: 20px;
+.reg-form {
+    background: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    padding: 0 40px;
+    justify-content: space-around;
+}
+.req_group {
+    width: 100%;
+}
+
+.button-req input{
+    width: 30%;
+
+}
+
+.reg_link {
+    width: 40%;
+    background: linear-gradient(45deg, rgb(78, 93, 220), rgb(67, 66, 112));
 }
 .button-req {
     display: flex;
@@ -398,6 +416,8 @@ img.main-item:hover {
     width: 360px;
     padding: 40px;
 }
+
+
 
 .servises-block > div {
     color: white;

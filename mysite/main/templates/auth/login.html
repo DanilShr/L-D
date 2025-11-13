@@ -10,28 +10,40 @@
 {% block first_section %}
 <section class="first-block">
     <div class="fix-container">
-        <form class="reg-form" method="post">
-            {% csrf_token %}
-            {% if error %}
-            <p>
-                {{ error }}
-            </p>
-            {% endif %}
-            <h1>Вход</h1>
-            <div class="mb-3">
-                <label for="username">Логин:</label>
-                <input type="text" id="username" name="username" class="reg-form__input form-control" required>
+        <div class="reg_block">
+            <form class="reg-form" method="post">
+                {% csrf_token %}
+                {% if error %}
+                <p>
+                    {{ error }}
+                </p>
+                {% endif %}
+                <h1>Вход</h1>
+                <div class="req_group">
+                    <div class="mb-3">
+                        <label for="username">Логин:</label>
+                        <input type="text" id="username" name="username" class="reg-form__input form-control" required>
+                    </div>
+                    <div>
+                        <label for="password">Пароль:</label>
+                        <input type="password" id="password" name="password" class="reg-form__input form-control" required>
+                    </div>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="checkRememberme">
+                  <label class="form-check-label" for="checkRememberme">
+                    Запомнить меня
+                  </label>
+                </div>
+                <div class="button-req">
+                    <input type="reset" class="btn btn-danger" value="Сбросить">
+                    <input type="submit" class="btn btn-primary" value="Войти">
+                </div>
+
+            </form>
+            <div class="reg_link">
             </div>
-            <div>
-                <label for="password">Пароль:</label>
-                <input type="password" id="password" name="password" class="reg-form__input form-control" required>
-            </div>
-            <div class="button-req">
-                <input type="reset" class="btn btn-danger" value="Сбросить">
-                <input type="submit" class="btn btn-primary" value="Войти">
-            </div>
-        </form>
-        <div class="login_logo"><img src="{% static 'login.png' %}"></div>
+        </div>
     </div>
 </section>
 {% endblock %}
