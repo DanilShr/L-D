@@ -1,50 +1,67 @@
 {% extends 'main/index.html' %}
 {% load static %}
-
+<!DOCTYPE html>
+<html lang="en">
 {% block title %}
-    Регистрация
+    Вход
 {% endblock %}
-
+<body style="background-color: #3b3939">
+}
 {% block first_section %}
-    <section class="first-block">
+<section class="first-block">
     <div class="fix-container">
-        <form class="reg-form" method="post">
-            {% csrf_token %}
-            {% if error %}
-            <p>
-                {{ error }}
-            </p>
-            {% endif %}
-            <h1>Регистрация</h1>
-            {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: #936262">{{ message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            <div class="mb-3">
-                <label for="username">Логин:</label>
-                <input type="text" id="username" name="username" class="reg-form__input form-control" required>
+        <div class="reg_block">
+            <form class="registration-form" method="post">
+                {% csrf_token %}
+                {% if error %}
+                <p>
+                    {{ error }}
+                </p>
+                {% endif %}
+                <h1>Создайте свой аккаунт</h1>
+                <div class="registration_group">
+                    <div class="mb-3">
+                        <label for="username">Логин:</label>
+                        <input type="text" id="username" name="username" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email">Почта:</label>
+                        <input type="text" id="email" name="email" class="reg-form__input form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password">Пароль:</label>
+                        <input type="password" id="password" name="password" class="reg-form__input form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password2">Повторите пароль:</label>
+                        <input type="password" id="password2" name="password2" class="reg-form__input form-control" required>
+                    </div>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="checkRememberme" required>
+                  <label class="form-check-label" for="checkRememberme" style="font-size: small">
+                    Я принимаю <a href="/terms">условия использования</a> и <a href="/privacy">политику конфиденциальности</a>
+                  </label>
+                </div>
+                <div class="form_actions">
+                    <button type="submit" class="btn btn-primary btn-large" style="margin: 0">
+                        Начать создавать
+                    </button>
+                    <p class="login-link" style="margin: 0">
+                        Уже есть аккаунт? <a href="/login">Войдите</a>
+                    </p>
+                </div>
+            </form>
+            <div class="reg_link_video">
+                <video class="video_req" autoplay muted loop id="myVideo" src="{% static '33.mp4' %}"></video>
+                <div class="overlay" style="font-size: small; font-style: italic; text-align: center">
+                    Создавайте будущее вместе с нами. Зарегистрируйтесь, чтобы получить доступ к мощным инструментам для воплощения ваших
+                    идей в жизнь
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="email">Email:</label>
-                <input type="text" id="email" name="email" class="reg-form__input form-control" required>
-            </div>
-            <div>
-                <label for="password">Пароль:</label>
-                <input type="password" id="password" name="password" class="reg-form__input form-control" required>
-            </div>
-            <div>
-                <label for="password">Повторите пароль:</label>
-                <input type="password" id="password2" name="password2" class="reg-form__input form-control" required>
-            </div>
-            <div class="button-req">
-                <input type="reset" class="btn btn-danger" value="Сбросить">
-                <input type="submit" class="btn btn-primary" value="Войти">
-            </div>
-        </form>
-        <div class="reg_logo"><img src="{% static 'registration.png' %}"></div>
+        </div>
     </div>
 </section>
 {% endblock %}
+</body>
+</html>

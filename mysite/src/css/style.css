@@ -372,7 +372,7 @@ img.main-item:hover {
     justify-content: space-around;
     flex-direction: row-reverse;
     width: 1000px;
-    height: 500px;
+    min-height: 500px;
     margin: 60px auto;
     border-radius: 3px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
@@ -383,7 +383,7 @@ img.main-item:hover {
     display: flex;
     flex-direction: column;
     width: 60%;
-    padding: 0 40px;
+    padding: 20px 40px;
     justify-content: space-around;
 }
 
@@ -424,7 +424,50 @@ img.main-item:hover {
     height: 80%;
 }
 
+.registration-form {
+    background: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    padding: 20px 40px;
+    justify-content: space-around;
+    gap: 15px;
+}
 
+.reg_link_video {
+    position: relative;
+    width: 40%;
+}
+
+.video_req {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overlay {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    padding: 90% 10px 10% 10px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+
+.registration_group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+}
+.form_actions {
+    display: flex;
+    justify-content: space-around;
+}
 
 .button-req {
     display: flex;
