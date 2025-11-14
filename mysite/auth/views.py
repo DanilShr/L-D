@@ -7,6 +7,8 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views import View
 
+from main.models import Profile
+
 
 # Create your views here.
 class LoginView(View):
@@ -41,6 +43,8 @@ class RegisterView(View):
         else:
             user = User.objects.create_user(username=username, email=email, password=password)
             user.save()
+            profile = Profile.objects.create(user=user)
+            profile.save()
 
         return HttpResponseRedirect(reverse('login'))
 

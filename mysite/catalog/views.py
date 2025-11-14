@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import DetailView, ListView
 
-from main.models import Services, Product
+from main.models import Services, Product, Profile
 from main.models import Orders
 
 
@@ -21,8 +21,9 @@ class ServicesView(View):
         data = request.POST.dict()
         user = request.user
         file = request.FILES['file']
+        profile = Profile.objects.get(user=user)
         del data['csrfmiddlewaretoken']
-        data['user'] = user
+        data['customer'] = profile
         order = Orders.objects.create(**data, file=file)
         order.save()
         return redirect('services')
