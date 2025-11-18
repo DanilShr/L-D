@@ -48,7 +48,6 @@ class RegisterView(View):
         else:
             try:
                 user = User.objects.create_user(username=username, email=email, password=password)
-                user.save()
                 profile = Profile.objects.create(user=user)
                 profile.save()
                 messages.success(request, 'Аккаунт успешно создан')

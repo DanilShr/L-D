@@ -940,14 +940,15 @@ h2 {
     left: 45%;
     z-index: 1000;
     width: 300px;
+    color: white;
 }
 
 .messages li {
     padding: 12px 40px 12px 15px;
     border-radius: 6px;
     position: relative;
-    font-size: 14px;
-    border: 1px solid;
+    font-size: 18px;
+    border: 1px ;
     margin-bottom: 10px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
@@ -970,23 +971,17 @@ h2 {
 
 /* Info */
 .messages .info {
-    background-color: #e3f2fd;
-    border-color: #2196f3;
-    color: #1565c0;
+    background-color: #2196f3;
 }
 
 /* Success */
 .messages .success {
-    background-color: #e8f5e9;
-    border-color: #4caf50;
-    color: #2e7d32;
+    background-color: #4caf50;
 }
 
 /* Error */
 .messages .error {
-    background-color: #ffebee;
-    border-color: #f44336;
-    color: #c62828;
+    background-color: #f44336;
 }
 
 

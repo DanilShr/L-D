@@ -56,8 +56,12 @@ class BasketApiView(ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.select_related("product").filter(user=self.request.user)
-        return queryset
+        user = self.request.user
+        if user.is_anonymous:
+            return None
+        else:
+            queryset = queryset.select_related("product").filter(user=self.request.user)
+            return queryset
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()

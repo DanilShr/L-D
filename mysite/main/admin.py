@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, Services, Product
+from .models import Profile, Services, Product, Orders
 from django.contrib.auth.models import User
 
 
@@ -16,3 +16,6 @@ class ProductAdmin(admin.ModelAdmin):
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('id', 'avatar','phone','email')
 
+@admin.register(Orders)
+class OrdersAdmin(admin.ModelAdmin):
+    list_display = ('id', 'customer', 'created_at', 'payment', 'total', 'get_items')
