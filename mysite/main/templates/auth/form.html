@@ -9,6 +9,16 @@
 }
 {% block first_section %}
 <section class="first-block">
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">
+                {{ message|safe }}
+                <a href="{% url 'register' %}" class="close">✖</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
     <div class="fix-container">
         <div class="reg_block">
             <form class="registration-form" method="post">
@@ -39,7 +49,7 @@
                 </div>
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" id="checkRememberme" required>
-                  <label class="form-check-label" for="checkRememberme" style="font-size: small">
+                  <label class="form-check-label" for="checkRememberme" style="font-size: small; margin-bottom: 10px ">
                     Я принимаю <a href="/terms">условия использования</a> и <a href="/privacy">политику конфиденциальности</a>
                   </label>
                 </div>
@@ -53,7 +63,7 @@
                 </div>
             </form>
             <div class="reg_link_video">
-                <video class="video_req" autoplay muted loop id="myVideo" src="{% static '33.mp4' %}"></video>
+                <video class="video_req" autoplay muted id="myVideo" src="{% static '333.mp4' %}"></video>
             </div>
         </div>
     </div>

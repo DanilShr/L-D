@@ -429,7 +429,7 @@ img.main-item:hover {
     display: flex;
     flex-direction: column;
     width: 60%;
-    padding: 20px 40px;
+    padding: 40px 40px;
     justify-content: space-around;
     gap: 15px;
 }
@@ -895,7 +895,7 @@ img.main-item:hover {
 }
 
 h2 {
-    margin: 0 0 20px 0;
+    margin: 20px 0 20px 0;
     text-align: left;
     color: #fff;
 }
@@ -931,8 +931,63 @@ h2 {
 .btn-primary:hover {
     background-color: #0b5ed7;
 }
+.messages {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    position: fixed;
+    top: 7%;
+    left: 45%;
+    z-index: 1000;
+    width: 300px;
+}
 
+.messages li {
+    padding: 12px 40px 12px 15px;
+    border-radius: 6px;
+    position: relative;
+    font-size: 14px;
+    border: 1px solid;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
 
+.messages .close {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    text-decoration: none;
+    font-size: 20px;
+    color: inherit;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.messages .close:hover {
+    opacity: 1;
+}
+
+/* Info */
+.messages .info {
+    background-color: #e3f2fd;
+    border-color: #2196f3;
+    color: #1565c0;
+}
+
+/* Success */
+.messages .success {
+    background-color: #e8f5e9;
+    border-color: #4caf50;
+    color: #2e7d32;
+}
+
+/* Error */
+.messages .error {
+    background-color: #ffebee;
+    border-color: #f44336;
+    color: #c62828;
+}
 
 
 .order-block {

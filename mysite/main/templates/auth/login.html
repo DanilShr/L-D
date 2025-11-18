@@ -7,8 +7,18 @@
 {% endblock %}
 <body style="background-color: #3b3939">
 }
-{% block first_section %}
+{% block first_section %}{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">
+                {{ message|safe }}
+                <a href="#" class="close">✖</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
 <section class="first-block">
+
     <div class="fix-container">
         <div class="reg_block">
             <form class="reg-form" method="post">
@@ -40,8 +50,13 @@
                         <a href="#">Забыли пароль?</a>
                     </div>
                 </div>
-                <div class="button-req">
-                    <input type="submit" class="btn btn-primary" value="Войти">
+                <div class="form_actions">
+                    <button type="submit" class="btn btn-primary btn-large" style="margin: 0; width: 40%">
+                        Войти
+                    </button>
+                    <p class="login-link" style="margin: 0">
+                        Нет аккаунта? <a href="{% url 'register' %}">Зарегистрируйтесь</a>
+                    </p>
                 </div>
             </form>
             <div class="reg_link">
