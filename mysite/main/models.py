@@ -25,8 +25,8 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     specifications = models.OneToOneField(Specification, on_delete=models.CASCADE, blank=True, null=True)
 
-def __str__(self):
-        return self.name
+    def __str__(self):
+            return self.name
 
 
 
@@ -51,23 +51,34 @@ class Basket(models.Model):
 
 
 class Orders(models.Model):
+    STATUS_CHOICES = [
+        ('В обработке', 'В обработке'),
+        ('Оплачен', 'Оплачен'),
+        ('Отправлен', 'Отправлен'),
+        ('Доставлен', 'Доставлен'),
+        ('Отменен', 'Отменен'),
+    ]
+
+
     customer = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    status = models.CharField(max_length=100, blank=True)
+    status = models.CharField(max_length=100, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
     payment = models.CharField(max_length=100, blank=True)
     total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
+    def __str__(self):
+        return f'Заказ #{self.id}'
 
 
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Orders, on_delete=models.CASCADE, related_name='items')
+    order = models.ForeignKey(Orders, on_delete=models.CASCADE, related_name='items', null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     count = models.IntegerField()
 
     def __str__(self):
-        return self.product.name
+        return f'Элементы для заказа {self.order.id}'
 
 class Delivery(models.Model):
     order = models.ForeignKey(Orders, on_delete=models.CASCADE)

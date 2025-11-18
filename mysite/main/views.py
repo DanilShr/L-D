@@ -28,7 +28,7 @@ class OrdersView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.filter(customer=self.request.user.id).prefetch_related('orderitem_set').order_by('-id')
+        queryset = queryset.filter(customer=self.request.user.id).prefetch_related('items').order_by('-id')
         return queryset
 
 

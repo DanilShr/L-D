@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, Services, Product, Orders
+from .models import Profile, Services, Product, Orders, OrderItem
 from django.contrib.auth.models import User
 
 
@@ -16,6 +16,16 @@ class ProductAdmin(admin.ModelAdmin):
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('id', 'avatar','phone','email')
 
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    fk_name = 'order'
+    extra = 0
+
 @admin.register(Orders)
 class OrdersAdmin(admin.ModelAdmin):
-    list_display = ('id', 'customer', 'created_at', 'payment', 'total', 'get_items')
+    inlines = [OrderItemInline]
+    list_display = ('id', 'customer', 'created_at', 'payment', 'total', 'status')
+    list_editable = ('status',)
+    list_display_links = ('id', 'customer')
+    list_filter = ('created_at', 'status')
+
